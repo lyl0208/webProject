@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context 
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/mvc 
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd ">
+
+	<!-- 使用注解驱动器代替注解映射器和注解适配器配置 -->
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+	<!-- 扫描controller,指定controller的包 -->
+	<context:component-scan base-package="com.myweb.*.controller" />
+
+	<!-- token拦截器配置 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/api/**" />
+			<mvc:exclude-mapping path="/api/login" />
+			<bean class="com.myweb.authz.ApiInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- 异常处理 -->
+	<bean id="exceptionHandler" class="com.myweb.core.exception.ExceptionHandler" />
+
+	<!-- 上传图片 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 上传尺寸为B ，这里是1M -->
+		<property name="maxUploadSize" value="1048576"/>
+	</bean>
+
+</beans>

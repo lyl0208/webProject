@@ -1,6 +1,7 @@
 package com.myweb.system.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 权限
@@ -15,6 +16,10 @@ public class Permission {
     private String permissionName;
 
     private String permissionValue;
+
+    private String permissionIcon;
+
+    private List<Permission> subPermission;
 
     private Date createTime;
 
@@ -56,5 +61,21 @@ public class Permission {
 
     public void setPermissionValue(String permissionValue) {
         this.permissionValue = permissionValue;
+    }
+
+    public List<Permission> getSubPermission() {
+        return subPermission;
+    }
+
+    public void setSubPermission(List<Permission> subPermission) {
+        this.subPermission = subPermission;
+    }
+
+    public String getPermissionIcon() {
+        return permissionIcon;
+    }
+
+    public void setPermissionIcon(String permissionIcon) {
+        this.permissionIcon = permissionIcon;
     }
 }

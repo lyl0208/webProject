@@ -14,7 +14,7 @@ public class TokenUtil {
 
     public static String createToken(Token token) {
         try {
-            return AesUtils.aesDecryptHexString(JSONUtil.toJsonString(token),TOKEN_KEY);
+            return AesUtils.aesEncryptHexString(JSONUtil.toJsonString(token),TOKEN_KEY);
         } catch (Exception e) {
             logger.info("token加密失败");
             //加密失败

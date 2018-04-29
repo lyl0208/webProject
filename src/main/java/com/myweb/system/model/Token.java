@@ -1,6 +1,8 @@
 package com.myweb.system.model;
 
 
+import java.util.Date;
+
 /**
  * Token信息
  */
@@ -25,15 +27,15 @@ public class Token {
         this.username = username;
     }
 
+    public boolean checkToken() {
+        return userId != null && username != null && loginTime != null;
+    }
+
     public Long getLoginTime() {
         return loginTime;
     }
 
     public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
-    }
-
-    public boolean checkToken() {
-        return userId != null && username != null && loginTime != null;
     }
 }

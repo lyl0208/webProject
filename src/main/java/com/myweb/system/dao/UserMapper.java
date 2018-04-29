@@ -9,4 +9,6 @@ public interface UserMapper {
 
     User findUserById(Long userId);
 
+    User findUserByUsername(String username);
+
 }

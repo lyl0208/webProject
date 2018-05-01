@@ -10,7 +10,7 @@ public class BaseController {
     /**
      * 获取登录的User
      */
-    public String getUserId(HttpServletRequest request) {return (String) request.getAttribute("userId");}
+    public Long getUserId(HttpServletRequest request) {return Long.valueOf(String.valueOf(request.getAttribute("userId")));}
 
 
     /**

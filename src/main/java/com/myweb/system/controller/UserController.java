@@ -1,5 +1,6 @@
 package com.myweb.system.controller;
 
+import com.myweb.core.BaseController;
 import com.myweb.core.PageResult;
 import com.myweb.core.ResultMap;
 import com.myweb.system.model.User;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -46,6 +49,25 @@ public class UserController {
     public ResultMap editUser(User user) {
         if (userService.editUser(user)) {
             return ResultMap.ok("修改成功");
+        } else {
+            return ResultMap.error("修改失败");
+        }
+    }
+
+    @PostMapping("/resetPassword")
+    public ResultMap resetPassword(Long userId) {
+        if (userService.resetPassword(userId)) {
+            return ResultMap.ok("修改成功");
+        } else {
+            return ResultMap.error("修改失败");
+        }
+    }
+
+    @PostMapping("/editPassword")
+    public ResultMap editPassword(String newPsw, HttpServletRequest request) {
+        Long userId = getUserId(request);
+        if (userService.editPassword(userId,newPsw)) {
+            return ResultMap.ok("修改成功,请重新登陆");
         } else {
             return ResultMap.error("修改失败");
         }

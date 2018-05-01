@@ -35,12 +35,6 @@ public class ApiInterceptor implements HandlerInterceptor{
             logger.info("token有误");
             throw new TokenException();
         }
-        //token有效期验证
-        Long loginTime = token.getLoginTime();
-        if (System.currentTimeMillis() - loginTime >= EXPIRE_TIME) {
-            logger.info("token已过期");
-            throw new TokenException();
-        }
         httpServletRequest.setAttribute("userId",token.getUserId());
         return true;
     }

@@ -24,8 +24,8 @@ $(function () {
         data.field.token = getToken();
         data.field._method = $("#pswForm").attr("method");
         layer.load(1);
-        $.post("api/user/psw", data.field, function (data) {
-            if (data.code == 200) {
+        $.post("/api/user/editPassword", data.field, function (data) {
+            if (data.code === 200) {
                 layer.msg(data.msg, {icon: 1});
                 setTimeout(function () {
                     loginOut();
@@ -123,14 +123,7 @@ function loginOut() {
     localStorage.removeItem("user");
     sessionStorage.removeItem("index-nav");
     layer.load(1);
-    $.ajax({
-        url: "api/login?token=" + getToken(),
-        type: "DELETE",
-        dataType: "JSON",
-        success: function (data) {
-            location.replace("login.html");
-        }
-    });
+    location.replace("login.html");
 }
 
 //显示表单弹窗

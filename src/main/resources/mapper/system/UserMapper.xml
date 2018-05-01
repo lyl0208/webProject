@@ -123,16 +123,16 @@
 
     <delete id="deleteUser" parameterType="java.lang.Long">
         DELETE FROM
-          `user` AS u
+          `user`
         WHERE
-          u.user_id = #{userId}
+           user_id = #{userId}
     </delete>
 
     <delete id="deleteEmployeeRole" parameterType="java.lang.Long">
         DELETE FROM
-          `user_role` AS ur
+          `user_role`
         WHERE
-          ur.user_id = #{userId}
+          user_id = #{userId}
     </delete>
 
     <update id="editUser" parameterType="com.myweb.system.model.User">
@@ -145,6 +145,24 @@
         <where>
             user_id = #{userId}
         </where>
+    </update>
+
+    <update id="resetPassword">
+        UPDATE
+          `user` AS u
+        SET
+          u.password = md5(#{password})
+        WHERE
+          u.user_id = #{userId}
+    </update>
+
+    <update id="editPassword">
+        UPDATE
+          `user` AS u
+        SET
+          u.password = md5(#{newPsw})
+        WHERE
+          u.user_id = #{userId}
     </update>
 
 

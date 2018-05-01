@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.stock.dao.StockMapper">
+    <resultMap id="stockMap" type="com.myweb.stock.dao.StockMapper">
+        <id column="brand_id" property="brandId" jdbcType="INTEGER"/>
+        <result column="brand" property="brand" jdbcType="VARCHAR"/>
+        <result column="color" property="color" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="memory" property="memory" jdbcType="VARCHAR"/>
+        <result column="number" property="number" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="findStock" parameterType="com.myweb.stock.model.StockArgs" resultMap="stockMap">
+        SELECT
+          s.*
+        FROM
+          stock_info AS s
+        <where>
+            1=1
+            <if test="searchKey != null and searchKey != '' and searchValue != '' and searchValue != null">and s.${searchKey} like '%${searchValue}%'</if>
+            <if test="brand != null and brand != '' and color != null and color != '' and model != null and model != '' and memory != null and memory != '' ">and s.brand = #{brand} and s.color = #{color} and s.model = #{model} and s.memory = #{memory}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.myweb.stock.model.StockInfo">
+        INSERT INTO
+          stock_info
+        (
+          brand,
+          color,
+          model,
+          memory
+        )
+        VALUES
+        (
+          #{brand},
+          #{color},
+          #{model},
+          #{memory}
+        )
+    </insert>
+
+    <update id="addNumber">
+        UPDATE
+          stock_info
+        SET
+          `number` = `number` + 1
+        WHERE
+          brand_id = #{brandId}
+    </update>
+
+</mapper>

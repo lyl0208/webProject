@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.phone.dao.PhoneMapper">
+    <resultMap id="phoneMap" type="com.myweb.phone.model.PhoneInfo">
+        <result column="IMEI" property="IMEI" jdbcType="VARCHAR"/>
+        <result column="brand" property="brand" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="color" property="color" jdbcType="VARCHAR"/>
+        <result column="memory" property="memory" jdbcType="VARCHAR"/>
+        <result column="degree" property="degree" jdbcType="VARCHAR"/>
+        <result column="protection" property="protection" jdbcType="VARCHAR"/>
+        <result column="damaged_part" property="damagedPart" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+        <result column="recovery_price" property="recoveryPrice" jdbcType="DECIMAL"/>
+        <result column="reference_selling_price" property="referenceSellingPrice" jdbcType="DECIMAL"/>
+        <result column="selling_id" property="sellingId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="listPhone" resultMap="phoneMap" parameterType="com.myweb.phone.model.PhoneArgs">
+        SELECT
+        p.*
+        FROM
+        phone_info AS p
+        <where>
+            <if test="searchKey != null and searchKey !='' and searchValue != null and searchValue != ''">p.${searchKey}
+                like '%${searchValue}%'
+            </if>
+        </where>
+    </select>
+
+    <insert id="addPhone" parameterType="com.myweb.phone.model.PhoneInfo">
+        INSERT INTO
+        phone_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="IMEI != null and IMEI != ''">
+                IMEI,
+            </if>
+            <if test="brand != null and brand != ''">
+                brand,
+            </if>
+            <if test="model != null and model != ''">
+                model,
+            </if>
+            <if test="color != null and color != ''">
+                color,
+            </if>
+            <if test="memory != null and memory != ''">
+                memory,
+            </if>
+            <if test="degree != null and degree != ''">
+                degree,
+            </if>
+            <if test="protection != null and protection !=''">
+                protection,
+            </if>
+            <if test="damagedPart != null and damagedPart != ''">
+                damaged_part,
+            </if>
+            <if test="state != null and state != ''">
+                state,
+            </if>
+            <if test="recoveryPrice != null and recoveryPrice != ''">
+                recovery_price,
+            </if>
+            <if test="referenceSellingPrice != null">
+                reference_selling_price,
+            </if>
+            <if test="sellingId != null and sellingId != ''">
+                selling_id,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="IMEI != null and IMEI != ''">
+                #{IMEI,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null and brand != ''">
+                #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null and model != ''">
+                #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="color != null and color != ''">
+                #{color,jdbcType=VARCHAR},
+            </if>
+            <if test="memory != null and memory != ''">
+                #{memory,jdbcType=VARCHAR},
+            </if>
+            <if test="degree != null and degree != ''">
+                #{degree,jdbcType=VARCHAR},
+            </if>
+            <if test="protection != null and protection !=''">
+                #{protection,jdbcType=VARCHAR},
+            </if>
+            <if test="damagedPart != null and damagedPart != ''">
+                #{damagedPart,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null and state != ''">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="recoveryPrice != null and recoveryPrice != ''">
+                #{recoveryPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="referenceSellingPrice != null">
+                #{referenceSellingPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="sellingId != null and sellingId != ''">
+                #{sellingId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="editPhone" parameterType="com.myweb.phone.model.PhoneInfo">
+        UPDATE
+        phone_info
+        <set>
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="IMEI != null and IMEI != ''">
+                    IMEI=#{IMEI,jdbcType=VARCHAR},
+                </if>
+                <if test="brand != null and brand != ''">
+                    brand=#{brand,jdbcType=VARCHAR},
+                </if>
+                <if test="model != null and model != ''">
+                    model=#{model,jdbcType=VARCHAR},
+                </if>
+                <if test="color != null and color != ''">
+                    color=#{color,jdbcType=VARCHAR},
+                </if>
+                <if test="memory != null and memory != ''">
+                    memory=#{memory,jdbcType=VARCHAR},
+                </if>
+                <if test="degree != null and degree != ''">
+                    degree=#{degree,jdbcType=VARCHAR},
+                </if>
+                <if test="protection != null and protection !=''">
+                    protection=#{protection,jdbcType=VARCHAR},
+                </if>
+                <if test="damagedPart != null and damagedPart != ''">
+                    damaged_part=#{damagedPart,jdbcType=VARCHAR},
+                </if>
+                <if test="state != null and state != ''">
+                    state=#{state,jdbcType=VARCHAR},
+                </if>
+                <if test="recoveryPrice != null and recoveryPrice != ''">
+                    recovery_price=#{recoveryPrice,jdbcType=DECIMAL},
+                </if>
+                <if test="referenceSellingPrice != null">
+                    reference_selling_price=#{referenceSellingPrice,jdbcType=DECIMAL},
+                </if>
+                <if test="sellingId != null and sellingId != ''">
+                    selling_id=#{sellingId,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </set>
+    </update>
+
+</mapper>

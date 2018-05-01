@@ -7,6 +7,9 @@ import com.myweb.core.utils.StringUtil;
  */
 public class BaseArgs {
 
+    private String searchKey;
+
+    private String searchValue;
 
     /**
      * 当前页数
@@ -43,5 +46,21 @@ public class BaseArgs {
 
     public void setLimit(Integer limit) {
         this.limit = limit;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getSearchValue() {
+        return searchValue;
+    }
+
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
     }
 }

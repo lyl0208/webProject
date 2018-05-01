@@ -5,17 +5,11 @@ $(function () {
 
     //路由注册
     Q.reg('home',function(){
-        load('home');
-    }).reg('employee',function(path){
-        load('admin/employee/'+path);
-    }).reg('prize',function (path) {
-        load('prize/'+path);
-    }).reg('organize',function (path) {
-        load('organize/'+path);
-    }).reg('friend',function (path) {
-        load('friend/'+path);
+        load('admin/home');
+    }).reg('admin',function(cstr,path){
+        load('admin/'+cstr+'/'+path);
     }).init({
-        index: 'employee'
+        index: 'home'
     });
 
     //点击导航切换页面时不刷新导航,其他方式切换页面要刷新导航

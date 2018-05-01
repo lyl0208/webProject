@@ -2,7 +2,7 @@ $(function() {
     //渲染表格
     layui.table.render({
         elem : '#table',
-        url : '/api/user/listUser',
+        url : '/api/phone/listPhone',
         method: 'post',
         where: {
             token : getToken()
@@ -10,10 +10,18 @@ $(function() {
         page: true,
         cols: [[
             {type:'numbers'},
-            {field:'userId', sort: true, title: 'ID'},
-            {field:'username', sort: true, title: '账号'},
-            {field:'realName', sort: true, title: '姓名'},
-            {field:'createTime', sort: true, templet:function(d){ return layui.util.toDateString(d.createTime); }, title: '创建时间'},
+            {field:'imei', sort: true, title: 'IMEI'},
+            {field:'brand', sort: true, title: '品牌'},
+            {field:'model', sort: true, title: '型号'},
+            {field:'color',sort:true,title:'颜色'},
+            {field:'memory',sort:true,title:'内存'},
+            {field:'degree',sort:true,title:'损坏程度'},
+            {field:'protection',sort:true,title:'是否在保',templet:function (d) {return d==='1'?'是':d==='0'?'否':'未知'}},
+            {field:'damagedPart',sort:true,title:'损坏部位'},
+            {field:'state',sort:true,title:'状态',templet:function (d) {return d==='1'?'待翻新':d==='2'?'翻新中':d==='3'?'已上架':d==='4'?'已下架':'未知'}},
+            {field:'recoveryPrice',sort:true,title:'回收价'},
+            {field:'referenceSellingPrice',sort:true,title:'参考销售价'},
+            {field:'sellingId',sort:true,title:'销售明细编号'},
             {align:'center', toolbar: '#barTpl', minWidth: 180, title: '操作'}
         ]]
     });
@@ -59,6 +67,8 @@ $(function() {
     $("#searchBtn").click(function(){
         doSearch(table);
     });
+
+
 });
 
 //显示表单弹窗
@@ -71,16 +81,42 @@ function showEditModel(data){
         content: $("#addModel").html()
     });
     $("#editForm")[0].reset();
-    $("#editForm").attr("action","/api/user/addUser");
+    $("#editForm").attr("action","/api/phone/addPhone");
     if(data!=null){
-        $("#editForm input[name=userId]").val(data.userId);
-        $("#editForm input[name=username]").val(data.username);
-        $("#editForm input[name=realName]").val(data.realName);
-        $("#editForm").attr("action","/api/user/editUser");
+        $("#editForm input[name=IMEI]").val(data.imei);
+        $("#editForm input[name=brand]").val(data.brand);
+        $("#editForm input[name=model]").val(data.model);
+        $("#editForm input[name=color]").val(data.color);
+        $("#editForm input[name=memory]").val(data.memory);
+        $("#editForm input[name=degree]").val(data.degree);
+        $("#editForm input[name=damagedPart]").val(data.damagedPart);
+        $("#editForm input[name=state]").val(data.state);
+        $("#editForm input[name=recoveryPrice]").val(data.recoveryPrice);
+        $('#editForm input[name=referenceSellingPrice]').val(data.referenceSellingPrice);
+        $("#editForm").attr("action","/api/phone/editPhone");
+        if (data.protection === 1) {
+            $('#protectionYes').attr("checked","checked");
+            $('#protectionNo').removeAttribute("checked");
+        } else if (data.protection === 0) {
+            $('#protectionNo').attr("checked","checked");
+            $('#protectionYes').removeAttribute("checked");
+        }
+        $("#editForm").attr("action","/api/phone/editPhone");
     }
     $("#btnCancel").click(function(){
         layer.closeAll('page');
     });
+    //表单验证
+    layui.form.verify({
+        money: function (value,item) {
+            var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+            if (!reg.test(value)) {
+                return "请输入正确的金钱格式";
+            }
+        },
+        IMEI:[ /^[\S]{15,17}$/
+            , '请输入正确的IMEI']
+    })
 
 }
 
@@ -127,7 +163,7 @@ function doReSet(userId){
             _method: "PUT"
         }, function(data){
             layer.closeAll('loading');
-            if(data.code===200){
+            if(data.code==200){
                 layer.msg(data.msg,{icon: 1});
             }else{
                 layer.msg(data.msg,{icon: 2});

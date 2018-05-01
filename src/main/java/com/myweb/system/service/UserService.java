@@ -21,4 +21,8 @@ public interface UserService {
 
     PageResult listUser(UserArgs userArgs);
 
+    boolean resetPassword(Long userId);
+
+    boolean editPassword( Long userId, String newPsw);
+
 }

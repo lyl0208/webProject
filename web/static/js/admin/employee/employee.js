@@ -90,7 +90,7 @@ function doDelete(obj){
         layer.close(index);
         layer.load(1);
         $.ajax({
-            url: "api/user/deleteUser",
+            url: "/api/user/deleteUser",
             type: "post",
             data:{userId:obj.data.userId,token:getToken()},
             dataType: "JSON",
@@ -122,12 +122,12 @@ function doReSet(userId){
     layer.confirm('确定要重置密码吗？', function(index){
         layer.close(index);
         layer.load(1);
-        $.post("api/user/psw/"+userId, {
+        $.post("/api/user/resetPassword", {
             token: getToken(),
-            _method: "PUT"
+            userId:userId
         }, function(data){
             layer.closeAll('loading');
-            if(data.code==200){
+            if(data.code===200){
                 layer.msg(data.msg,{icon: 1});
             }else{
                 layer.msg(data.msg,{icon: 2});

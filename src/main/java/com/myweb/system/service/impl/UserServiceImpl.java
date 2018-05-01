@@ -69,5 +69,17 @@ public class UserServiceImpl implements UserService{
         return result;
     }
 
+    @Override
+    public boolean resetPassword(Long userId) {
+        User user = userMapper.findUserById(userId);
+        user.setPassword("123456");
+        return userMapper.resetPassword(user) > 0;
+    }
+
+    @Override
+    public boolean editPassword(Long userId, String newPsw) {
+        return userMapper.editPassword(userId,newPsw) > 0;
+    }
+
 
 }

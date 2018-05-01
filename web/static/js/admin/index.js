@@ -3,6 +3,21 @@ $(function () {
     initUserInfo();  //获取用户信息
     initNav();  //获取导航栏
 
+    //路由注册
+    Q.reg('home',function(){
+        load('home');
+    }).reg('employee',function(path){
+        load('admin/employee/'+path);
+    }).reg('prize',function (path) {
+        load('prize/'+path);
+    }).reg('organize',function (path) {
+        load('organize/'+path);
+    }).reg('friend',function (path) {
+        load('friend/'+path);
+    }).init({
+        index: 'employee'
+    });
+
     //点击导航切换页面时不刷新导航,其他方式切换页面要刷新导航
     layui.element.on('nav(index-nav)', function (elem) {
         refreshNav = false;

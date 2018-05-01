@@ -78,4 +78,75 @@
           u.username = #{username}
     </select>
 
+    <insert id="addUser" parameterType="com.myweb.system.model.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+        INSERT INTO
+          `user`
+        (
+          username,
+          password,
+          real_name,
+          create_time
+        )
+        VALUES
+        (
+          #{username},
+          #{password},
+          #{realName},
+          #{createTime}
+        )
+    </insert>
+
+    <insert id="addEmployeeRole" parameterType="com.myweb.system.model.User">
+        INSERT INTO
+          `user_role`
+        (
+          user_id,
+          role_id
+        )
+        VALUES
+        (
+          #{userId},
+          2
+        )
+    </insert>
+
+    <select id="listUser" parameterType="com.myweb.system.model.UserArgs" resultMap="userMap">
+        SELECT
+          u.*
+        FROM
+          `user` AS u
+        <where>
+            <if test="searchKey != null and searchKey != '' and searchValue != null and searchValue != ''">u.${searchKey} like '%${searchValue}%'</if>
+        </where>
+
+    </select>
+
+    <delete id="deleteUser" parameterType="java.lang.Long">
+        DELETE FROM
+          `user` AS u
+        WHERE
+          u.user_id = #{userId}
+    </delete>
+
+    <delete id="deleteEmployeeRole" parameterType="java.lang.Long">
+        DELETE FROM
+          `user_role` AS ur
+        WHERE
+          ur.user_id = #{userId}
+    </delete>
+
+    <update id="editUser" parameterType="com.myweb.system.model.User">
+        UPDATE
+          `user`
+        <set>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="realName != null and realName != ''">real_name = #{realName},</if>
+        </set>
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+
+
+
 </mapper>

@@ -39,7 +39,7 @@ public class LoginController extends BaseController {
         if (user == null) {
             return ResultMap.error("用户名不存在");
         }
-        String encryptPwd = AesUtils.MD5(loginArgs.getPassword(), String.valueOf(user.getUserId()));
+        String encryptPwd = AesUtils.MD5(loginArgs.getPassword());
         if (!user.getPassword().equals(encryptPwd)) {
             return ResultMap.error("密码错误");
         }

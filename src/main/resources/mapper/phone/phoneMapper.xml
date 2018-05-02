@@ -33,9 +33,11 @@
         LEFT JOIN phone_color AS pc ON p.color_id=pc.color_id
         LEFT JOIN phone_memory AS pme ON p.memory_id=pme.memory_id
         <where>
-            <if test="searchKey != null and searchKey !='' and searchValue != null and searchValue != ''">p.${searchKey}
-                like '%${searchValue}%'
-            </if>
+            <if test="searchKey == 'brand_name'">pb.brand_name like '%${searchValue}%'</if>
+            <if test="searchKey == 'model_name'">pm.model_name like '%${searchValue}%'</if>
+            <if test="searchKey == 'color_name'">pc.color_name like '%${searchValue}%'</if>
+            <if test="searchKey == 'memory_name'">pme.memory_name like '%${searchValue}%'</if>
+            <if test="searchKey == 'IMEI'">p.IMEI like '%${searchValue}%'</if>
         </where>
     </select>
 

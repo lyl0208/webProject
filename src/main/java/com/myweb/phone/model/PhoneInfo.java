@@ -6,29 +6,54 @@ public class PhoneInfo {
 
 
     /**
+     * 手机主键
+     */
+    private Long phoneId;
+
+    /**
      * 手机IMEI
      */
     private String IMEI;
 
     /**
-     * 手机品牌
+     * 手机品牌关联ID
      */
-    private String brand;
+    private Long brandId;
 
     /**
-     * 型号
+     * 手机品牌名
      */
-    private String model;
+    private String brandName;
 
     /**
-     * 颜色
+     * 型号关联ID
      */
-    private String color;
+    private Long modelId;
 
     /**
-     * 内存
+     * 型号名
      */
-    private String memory;
+    private String modelName;
+
+    /**
+     * 颜色关联Id
+     */
+    private Long colorId;
+
+    /**
+     * 颜色名
+     */
+    private String colorName;
+
+    /**
+     * 内存关联Id
+     */
+    private Long memoryId;
+
+    /**
+     * 内存名
+     */
+    private String memoryName;
 
     /**
      * 损坏程度
@@ -75,36 +100,68 @@ public class PhoneInfo {
         this.IMEI = IMEI;
     }
 
-    public String getBrand() {
-        return brand;
+    public Long getBrandId() {
+        return brandId;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
     }
 
-    public String getModel() {
-        return model;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
-    public String getColor() {
-        return color;
+    public Long getModelId() {
+        return modelId;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setModelId(Long modelId) {
+        this.modelId = modelId;
     }
 
-    public String getMemory() {
-        return memory;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setMemory(String memory) {
-        this.memory = memory;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public Long getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(Long colorId) {
+        this.colorId = colorId;
+    }
+
+    public String getColorName() {
+        return colorName;
+    }
+
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
+
+    public Long getMemoryId() {
+        return memoryId;
+    }
+
+    public void setMemoryId(Long memoryId) {
+        this.memoryId = memoryId;
+    }
+
+    public String getMemoryName() {
+        return memoryName;
+    }
+
+    public void setMemoryName(String memoryName) {
+        this.memoryName = memoryName;
     }
 
     public String getDegree() {
@@ -161,5 +218,13 @@ public class PhoneInfo {
 
     public void setSellingId(String sellingId) {
         this.sellingId = sellingId;
+    }
+
+    public Long getPhoneId() {
+        return phoneId;
+    }
+
+    public void setPhoneId(Long phoneId) {
+        this.phoneId = phoneId;
     }
 }

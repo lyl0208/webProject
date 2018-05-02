@@ -4,43 +4,43 @@ import com.myweb.core.BaseArgs;
 
 public class StockArgs extends BaseArgs {
 
-    private String brand;
+    private Long brandId;
 
-    private String color;
+    private Long colorId;
 
-    private String model;
+    private Long modelId;
 
-    private String memory;
+    private Long memoryId;
 
-    public String getBrand() {
-        return brand;
+    public Long getBrandId() {
+        return brandId;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
     }
 
-    public String getColor() {
-        return color;
+    public Long getColorId() {
+        return colorId;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setColorId(Long colorId) {
+        this.colorId = colorId;
     }
 
-    public String getModel() {
-        return model;
+    public Long getModelId() {
+        return modelId;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setModelId(Long modelId) {
+        this.modelId = modelId;
     }
 
-    public String getMemory() {
-        return memory;
+    public Long getMemoryId() {
+        return memoryId;
     }
 
-    public void setMemory(String memory) {
-        this.memory = memory;
+    public void setMemoryId(Long memoryId) {
+        this.memoryId = memoryId;
     }
 }

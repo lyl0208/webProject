@@ -4,8 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.myweb.core.PageResult;
 import com.myweb.phone.dao.PhoneMapper;
-import com.myweb.phone.model.PhoneArgs;
-import com.myweb.phone.model.PhoneInfo;
+import com.myweb.phone.model.*;
 import com.myweb.phone.service.PhoneService;
 import com.myweb.stock.dao.StockMapper;
 import com.myweb.stock.model.StockArgs;
@@ -41,21 +40,21 @@ public class PhoneServiceImpl implements PhoneService {
     @Transactional(rollbackFor = Exception.class)
     public boolean addPhone(PhoneInfo phone) {
         StockArgs args = new StockArgs();
-        args.setBrand(phone.getBrand());
-        args.setColor(phone.getColor());
-        args.setMemory(phone.getMemory());
-        args.setModel(phone.getModel());
+        args.setBrandId(phone.getBrandId());
+        args.setColorId(phone.getColorId());
+        args.setMemoryId(phone.getMemoryId());
+        args.setModelId(phone.getModelId());
         List<StockInfo> stockInfos = stockMapper.findStock(args);
         if (stockInfos.size() > 0) {
-            if(stockMapper.addNumber(stockInfos.get(0).getBrandId()) <= 0 ) {
+            if (stockMapper.addNumber(stockInfos.get(0).getStockId()) <= 0) {
                 return false;
             }
         } else {
             StockInfo stockInfo = new StockInfo();
-            stockInfo.setBrand(phone.getBrand());
-            stockInfo.setColor(phone.getColor());
-            stockInfo.setModel(phone.getModel());
-            stockInfo.setMemory(phone.getMemory());
+            stockInfo.setBrandId(phone.getBrandId());
+            stockInfo.setColorId(phone.getColorId());
+            stockInfo.setModelId(phone.getModelId());
+            stockInfo.setMemoryId(phone.getMemoryId());
             if (stockMapper.save(stockInfo) <= 0) {
                 return false;
             }
@@ -66,6 +65,87 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean editPhone(PhoneInfo phoneInfo) {
-        return false;
+        PhoneInfo oldPhone = phoneMapper.findPhoneById(phoneInfo.getPhoneId());
+        if (!oldPhone.getBrandId().equals(phoneInfo.getBrandId())
+                || !oldPhone.getModelId().equals(phoneInfo.getModelId())
+                || !oldPhone.getColorId().equals(phoneInfo.getColorId())
+                || !oldPhone.getMemoryId().equals(phoneInfo.getMemoryId())) {
+            //手机品牌被修改，需要调整库存
+            //减少修改前库存的数量
+            StockArgs args = new StockArgs();
+            args.setBrandId(oldPhone.getBrandId());
+            args.setModelId(oldPhone.getModelId());
+            args.setMemoryId(oldPhone.getMemoryId());
+            args.setColorId(oldPhone.getColorId());
+            List<StockInfo> stocks = stockMapper.findStock(args);
+            if (stocks.size() > 0) {
+                if (stockMapper.descNumber(stocks.get(0).getStockId()) <= 0) {
+                    return false;
+                }
+            }
+
+            //增加修改后库存的数量
+            args.setBrandId(phoneInfo.getBrandId());
+            args.setColorId(phoneInfo.getColorId());
+            args.setMemoryId(phoneInfo.getMemoryId());
+            args.setModelId(phoneInfo.getModelId());
+            stocks = stockMapper.findStock(args);
+            if (stocks.size() > 0) {
+                if (stockMapper.addNumber(stocks.get(0).getStockId()) <= 0) {
+                    return false;
+                }
+            } else {
+                StockInfo stockInfo = new StockInfo();
+                stockInfo.setBrandId(phoneInfo.getBrandId());
+                stockInfo.setColorId(phoneInfo.getColorId());
+                stockInfo.setModelId(phoneInfo.getModelId());
+                stockInfo.setMemoryId(phoneInfo.getMemoryId());
+                if (stockMapper.save(stockInfo) <= 0) {
+                    return false;
+                }
+            }
+        }
+        //修改手机信息
+        return phoneMapper.editPhone(phoneInfo) > 0;
+    }
+
+    @Override
+    public List<PhoneBrand> getBrands() {
+        return phoneMapper.getBrands();
+    }
+
+    @Override
+    public boolean addBrand(PhoneBrand phoneBrand) {
+        return phoneMapper.addBrand(phoneBrand) > 0;
+    }
+
+    @Override
+    public List<PhoneModel> getModels(Long brandId) {
+        return phoneMapper.getModels(brandId);
+    }
+
+    @Override
+    public boolean addModel(PhoneModel phoneModel) {
+        return phoneMapper.addModel(phoneModel) > 0;
+    }
+
+    @Override
+    public List<PhoneColor> getColors(Long modelId) {
+        return phoneMapper.getColors(modelId);
+    }
+
+    @Override
+    public boolean addColor(PhoneColor phoneColor) {
+        return phoneMapper.addColor(phoneColor) > 0;
+    }
+
+    @Override
+    public List<PhoneMemory> getMemorys(Long modelId) {
+        return phoneMapper.getMemorys(modelId);
+    }
+
+    @Override
+    public boolean addMemory(PhoneMemory phoneMemory) {
+        return phoneMapper.addMemory(phoneMemory) > 0;
     }
 }

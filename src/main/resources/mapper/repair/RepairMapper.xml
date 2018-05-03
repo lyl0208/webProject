@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.repair.dao.RepairMapper">
+    <resultMap id="repairMap" type="com.myweb.repair.model.Repair">
+        <result column="repair_order_number" property="repairOrderNumber" jdbcType="VARCHAR"/>
+        <result column="IMEI" property="IMEI" jdbcType="VARCHAR"/>
+        <result column="maintenance_project" property="maintenanceProject" jdbcType="VARCHAR"/>
+        <result column="amount_complained" property="amountComplained" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap id="phoneRepairDtoMap" type="com.myweb.repair.model.PhoneRepairDto">
+        <result column="IMEI" property="IMEI" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="degree" property="degree" jdbcType="VARCHAR"/>
+        <result column="damaged_part" property="damagedPart" jdbcType="VARCHAR"/>
+        <result column="maintenance_project" property="maintenanceProject" jdbcType="VARCHAR"/>
+        <result column="amount_complained" property="amountComplained" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="listPhoneRepairDto" resultMap="phoneRepairDtoMap">
+        SELECT
+          p.IMEI AS IMEI
+    </select>
+
+
+</mapper>

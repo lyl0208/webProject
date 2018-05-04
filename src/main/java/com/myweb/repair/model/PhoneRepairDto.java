@@ -33,6 +33,11 @@ public class PhoneRepairDto {
     private String maintenanceProject;
 
     /**
+     * 维修单号
+     */
+    private String repairOrderNumber;
+
+    /**
      * 投入金额
      */
     private BigDecimal amountComplained;
@@ -83,5 +88,13 @@ public class PhoneRepairDto {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getRepairOrderNumber() {
+        return repairOrderNumber;
+    }
+
+    public void setRepairOrderNumber(String repairOrderNumber) {
+        this.repairOrderNumber = repairOrderNumber;
     }
 }

@@ -20,9 +20,22 @@
     </resultMap>
 
 
-    <select id="listPhoneRepairDto" resultMap="phoneRepairDtoMap">
+    <select id="listPhoneRepairDto" resultMap="phoneRepairDtoMap" parameterType="com.myweb.repair.model.RepairArgs">
         SELECT
-          p.IMEI AS IMEI
+          p.IMEI,
+          p.state,
+          p.degree,
+          p.damaged_part,
+          r.maintenance_project,
+          r.amount_complained
+        FROM
+          phone_info AS p
+        LEFT JOIN repair AS r ON p.IMEI = r.IMEI
+        <where>
+            <trim prefixOverrides="and">
+                <if test="state != null"> and p.state = #{state}</if>
+            </trim>
+        </where>
     </select>
 
 

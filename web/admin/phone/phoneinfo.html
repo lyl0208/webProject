@@ -22,75 +22,22 @@
 <!--表单弹窗-->
 <script type="text/html" id="addModel">
     <form id="editForm" class="layui-form model-form" action="">
-        <input type="hidden" name="phoneId"/>
         <div class="layui-form-item">
             <label class="layui-form-label">IMEI</label>
             <div class="layui-input-block">
-                <input name="IMEI" placeholder="请输入IMEI" type="text" class="layui-input" maxlength="20" lay-verify="required|IMEI" required />
+                <input name="IMEI" placeholder="请输入IMEI" type="text" class="layui-input" maxlength="20" lay-verify="required|IMEI" required readonly/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">品牌<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="addBrand()"><i class="layui-icon"></i></a></label>
+            <label class="layui-form-label">维修项目</label>
             <div class="layui-input-block">
-                <select name="brandId" id="brand-select" lay-verify="required" lay-filter="brandSelect" lay-search="" class="layui-input"></select>
+                <input name="maintenanceProject" placeholder="请输入维修项目" type="text" class="layui-input" maxlength="20" lay-verify="required" required/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">型号<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="addModel()"><i class="layui-icon"></i></a></label>
+            <label class="layui-form-label">投入金额</label>
             <div class="layui-input-block">
-                <select name="modelId" id="model-select" lay-verify="required" lay-filter="modelSelect" lay-search="" class="layui-input"></select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">颜色<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="addColor()"><i class="layui-icon"></i></a></label>
-            <div class="layui-input-block">
-                <select name="colorId" id="color-select" lay-verify="required" lay-filter="colorSelect" lay-search="" class="layui-input"></select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">内存<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="addMemory()"><i class="layui-icon"></i></a></label>
-            <div class="layui-input-block">
-                <select name="memoryId" id="memory-select" lay-verify="required" lay-filter="memorySelect" lay-search="" class="layui-input"></select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">新旧程度</label>
-            <div class="layui-input-block">
-                <input name="degree" placeholder="请输入新旧程度" type="text" class="layui-input" maxlength="20" lay-verify="required" required />
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">是否在保</label>
-            <div class="layui-input-block">
-                <input name="protection" id="protectionYes" type="radio"  title="是" value="1" checked/>
-                <input name="protection" id="protectionNo" type="radio"  title="否" value="0" />
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">损坏部位</label>
-            <div class="layui-input-block">
-                <input name="damagedPart" placeholder="请输入损坏部位" type="text" class="layui-input" maxlength="20" lay-verify="required" required />
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">回收价</label>
-            <div class="layui-input-block">
-                <input name="recoveryPrice" placeholder="请输入回收价" type="text" class="layui-input" maxlength="20" lay-verify="required|money" required />
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">参考销售价</label>
-            <div class="layui-input-block">
-                <input name="referenceSellingPrice" placeholder="请输入销售价" type="text" class="layui-input" maxlength="20" lay-verify="required|money" required />
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block">
-                <select name="state" lay-verify="required" required>
-                    <option value="1">待翻新</option>
-                    <option value="3">可上架</option>
-                </select>
+                <input name="amountComplained" placeholder="请输入投入金额" type="text" class="layui-input" maxlength="20" lay-verify="required|money" required />
             </div>
         </div>
 
@@ -104,38 +51,6 @@
 <!-- 表格操作列 -->
 <script type="text/html" id="barTpl">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
-</script>
-
-<!--品牌下拉框模板-->
-<script type="text/html" id="brandSelect">
-    <option value="">请选择</option>
-    {{# layui.each(d,function(index,item){ }}
-        <option value="{{item.brandId}}">{{item.brandName}}</option>
-    {{# }); }}
-</script>
-
-<!--型号下拉框模板-->
-<script type="text/html" id="modelSelect">
-    <option value="">请选择</option>
-    {{# layui.each(d,function(index,item){ }}
-    <option value="{{item.modelId}}">{{item.modelName}}</option>
-    {{# }); }}
-</script>
-
-<!--颜色下拉框模板-->
-<script type="text/html" id="colorSelect">
-    <option value="">请选择</option>
-    {{# layui.each(d,function(index,item){ }}
-    <option value="{{item.colorId}}">{{item.colorName}}</option>
-    {{# }); }}
-</script>
-
-<!--内存下拉框模板-->
-<script type="text/html" id="memorySelect">
-    <option value="">请选择</option>
-    {{# layui.each(d,function(index,item){ }}
-    <option value="{{item.memoryId}}">{{item.memoryName}}</option>
-    {{# }); }}
 </script>
 
 <script type="text/javascript" src="/static/js/admin/phone/phoneinfo.js"></script>

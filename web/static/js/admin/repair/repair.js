@@ -11,9 +11,10 @@ $(function() {
         cols: [[
             {type:'numbers'},
             {field:'imei', sort: true, title: 'IMEI'},
-            {field:'state',sort: true, title: '手机状态',templet:function (d) {return d.state===1?'待翻新':d===2?'翻新中':d===3?'已上架':d===4?'已下架':'未知'}},
+            {field:'state',sort: true, title: '手机状态',templet:function (d) {return d.state===1?'待翻新':d.state===2?'翻新中':d.state===3?'已上架':d.state===4?'已下架':'未知'}},
             {field:'degree',sort: true, title: '新旧程度'},
             {field:'damagedPart',sort: true, title: '损坏部位'},
+            {field: 'repairOrderNumber',sort:true, title:'维修单号'},
             {field:'maintenanceProject', sort: true, title: '维修项目'},
             {field:'amountComplained', sort:true, title: '投入金额'},
             {align:'center', toolbar: '#barTpl', minWidth: 180, title: '操作'}
@@ -46,8 +47,7 @@ $(function() {
     //搜索选择事件
     layui.form.on('select(stateSelect)',function (data) {
        var value = data.value;
-       console.log("选择：" + value);
-       layui.table.reload('table', {where: {state: value}});
+       layui.table.reload('table', {where: {state: value,repairOrderNumber:$('#repairOrderNumber').val().trim()}});
     });
 
     //工具条点击事件
@@ -58,7 +58,7 @@ $(function() {
         if(layEvent === 'fix'){ //翻新
             showEditModel(data);
         } else if(layEvent === 'finish'){ //上架
-            doDelete(obj);
+            doFinish(obj);
         }
     });
 
@@ -74,30 +74,17 @@ $(function() {
 function showEditModel(data){
     layer.open({
         type: 1,
-        title: data==null?"添加手机档案":"修改手机档案",
+        title: "填写维修单",
         area: '450px',
         offset: '120px',
         content: $("#addModel").html()
     });
     $("#editForm")[0].reset();
-    $("#editForm").attr("action","/api/phone/addPhone");
+    $("#editForm").attr("action","/api/repair/addRepair");
     if(data!=null){
-        $('#editForm input[name=phoneId]').val(data.phoneId);
         $("#editForm input[name=IMEI]").val(data.imei);
-        $("#editForm input[name=degree]").val(data.degree);
-        $("#editForm input[name=damagedPart]").val(data.damagedPart);
-        $("#editForm input[name=state]").val(data.state);
-        $("#editForm input[name=recoveryPrice]").val(data.recoveryPrice);
-        $('#editForm input[name=referenceSellingPrice]').val(data.referenceSellingPrice);
-        $("#editForm").attr("action","/api/phone/editPhone");
-        if (data.protection === 1) {
-            $('#protectionYes').attr("checked","checked");
-            $('#protectionNo').removeAttribute("checked");
-        } else if (data.protection === 0) {
-            $('#protectionNo').attr("checked","checked");
-            $('#protectionYes').removeAttribute("checked");
-        }
-        $("#editForm").attr("action","/api/phone/editPhone");
+        $("#editForm input[name=maintenanceProject]").val(data.maintenanceProject);
+        $("#editForm input[name=amountComplained]").val(data.amountComplained);
     }
     $("#btnCancel").click(function(){
         layer.closeAll('page');
@@ -117,28 +104,27 @@ function showEditModel(data){
 
 //搜索
 function doSearch(table){
-    var key = $("#searchKey").val();
-    var value = $("#searchValue").val();
-    if (value=='') {
-        key = '';
-    }
-    layui.table.reload('table', {where: {searchKey: key,searchValue: value}});
+    layui.table.reload('table', {where: {state: $('#state').val(),repairOrderNumber:$('#repairOrderNumber').val().trim()}});
 }
 
-function initBrandSelect(brandId) {
-
-    layer.load(1);
-    $.post("/api/phone/getBrands",{token:getToken()},function (data) {
-        layui.laytpl(brandSelect.innerHTML).render(data,function (html) {
-            $('#brand-select').html(html);
-            if (brandId !== null && brandId !== undefined){
-                $('#brand-select').val(brandId);
-                selectedBrand = brandId;
+function doFinish(obj) {
+    layer.confirm('确定要上架吗？', function(index){
+        layer.close(index);
+        layer.load(1);
+        $.ajax({
+            url: "/api/repair/finishRepair",
+            type: "post",
+            data:{imei:obj.data.imei,token:getToken()},
+            dataType: "JSON",
+            success: function(data){
+                layer.closeAll('loading');
+                if(data.code===200){
+                    layer.msg(data.msg,{icon: 1});
+                    layui.table.reload('table', {where: {state: $('#state').val(),repairOrderNumber:$('#repairOrderNumber').val().trim()}});
+                }else{
+                    layer.msg(data.msg,{icon: 2});
+                }
             }
-            layui.form.render();
-            layer.closeAll('loading');
-        })
+        });
     });
-
-
 }

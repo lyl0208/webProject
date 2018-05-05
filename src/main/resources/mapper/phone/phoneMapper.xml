@@ -277,5 +277,18 @@
           phone_id = #{phoneId}
     </select>
 
+    <select id="findPhoneByImei" resultMap="phoneMap">
+        select
+          *
+        from
+          phone_info
+        where
+          imei = #{imei}
+        ORDER BY
+          phone_id DESC
+        limit 1
+    </select>
+
+
 
 </mapper>

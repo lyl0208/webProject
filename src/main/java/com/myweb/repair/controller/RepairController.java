@@ -23,10 +23,20 @@ public class RepairController {
         return repairService.listPhoneRepairDto(args);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/addRepair")
     public ResultMap save(Repair repair) {
-        if (repairService.save(repair)) {
+        if (repairService.repairPhone(repair)) {
             return ResultMap.ok("处理成功，手机已进入维修状态");
+        } else {
+            return ResultMap.error("处理失败，请稍后重试");
+        }
+    }
+
+
+    @PostMapping("/finishRepair")
+    public ResultMap finishRepair(String imei) {
+        if (repairService.finishRepair(imei)) {
+            return ResultMap.ok("处理成功，手机已上架");
         } else {
             return ResultMap.error("处理失败，请稍后重试");
         }

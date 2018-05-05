@@ -14,6 +14,7 @@
         <result column="IMEI" property="IMEI" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
         <result column="degree" property="degree" jdbcType="VARCHAR"/>
+        <result column="repair_order_number" property="repairOrderNumber" jdbcType="VARCHAR"/>
         <result column="damaged_part" property="damagedPart" jdbcType="VARCHAR"/>
         <result column="maintenance_project" property="maintenanceProject" jdbcType="VARCHAR"/>
         <result column="amount_complained" property="amountComplained" jdbcType="VARCHAR"/>
@@ -26,6 +27,7 @@
           p.state,
           p.degree,
           p.damaged_part,
+          r.repair_order_number,
           r.maintenance_project,
           r.amount_complained
         FROM
@@ -34,9 +36,38 @@
         <where>
             <trim prefixOverrides="and">
                 <if test="state != null"> and p.state = #{state}</if>
+                <if test="repairOrderNumber != null and repairOrderNumber != ''"> and r.repair_order_number = #{repairOrderNumber}</if>
             </trim>
         </where>
     </select>
+
+
+    <select id="countByOrderNumber" resultType="java.lang.Integer">
+        SELECT
+          count(1)
+        from
+          repair
+        where
+          repair_order_number = #{orderNumber}
+    </select>
+
+    <insert id="save">
+        INSERT INTO
+          repair
+        (
+          repair_order_number,
+          IMEI,
+          maintenance_project,
+          amount_complained
+        )
+        VALUES
+        (
+          #{repairOrderNumber},
+          #{IMEI},
+          #{maintenanceProject},
+          #{amountComplained}
+        )
+    </insert>
 
 
 </mapper>

@@ -9,7 +9,9 @@ public interface RepairService {
 
     PageResult<PhoneRepairDto> listPhoneRepairDto(RepairArgs args);
 
-    boolean save(Repair repair);
+    boolean repairPhone(Repair repair);
+
+    boolean finishRepair(String imei);
 
 
 }

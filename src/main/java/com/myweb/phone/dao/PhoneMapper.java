@@ -37,4 +37,6 @@ public interface PhoneMapper {
 
     PhoneInfo findPhoneById(Long phoneId);
 
+    PhoneInfo findPhoneByImei(String imei);
+
 }

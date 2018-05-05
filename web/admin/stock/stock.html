@@ -1,0 +1,59 @@
+<div>
+    <div class="layui-form toolbar">
+        品牌：
+        <input id="brandName" class="layui-input search-input" type="text" placeholder="请输入品牌"/>
+        型号：
+        <input id="modelName" class="layui-input search-input" type="text" placeholder="请输入型号"/>
+        内存：
+        <input id="memoryName" class="layui-input search-input" type="text" placeholder="请输入内存"/>
+        颜色:
+        <input id="colorName" class="layui-input search-input" type="text" placeholder="请输入颜色"/>
+        <button id="searchBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
+
+    <!--数据表格-->
+    <table class="layui-table" id="table" lay-filter="table"></table>
+
+</div>
+
+<!--表单弹窗-->
+<script type="text/html" id="addModel">
+    <form id="editForm" class="layui-form model-form" action="">
+        <input type="hidden" name="phoneId"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">IMEI</label>
+            <div class="layui-input-block">
+                <input name="IMEI" placeholder="请输入IMEI" type="text" class="layui-input" maxlength="20" lay-verify="required|IMEI" required readonly/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">维修项目</label>
+            <div class="layui-input-block">
+                <input name="maintenanceProject" placeholder="请输入维修项目" type="text" class="layui-input" maxlength="20" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">投入金额</label>
+            <div class="layui-input-block">
+                <input name="amountComplained" placeholder="请输入投入金额" type="text" class="layui-input" maxlength="20" lay-verify="required|money" required />
+            </div>
+        </div>
+
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+            <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+
+    {{#  if(d.state === 1){ }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="fix">翻新</a>
+    {{# } else if (d.state === 2) { }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="finish">上架</a>
+    {{# } }}
+</script>
+
+<script type="text/javascript" src="/static/js/admin/stock/stock.js"></script>

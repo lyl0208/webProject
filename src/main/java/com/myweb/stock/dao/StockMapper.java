@@ -1,6 +1,7 @@
 package com.myweb.stock.dao;
 
 import com.myweb.stock.model.StockArgs;
+import com.myweb.stock.model.StockDto;
 import com.myweb.stock.model.StockInfo;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,5 +19,8 @@ public interface StockMapper {
 
     @Transactional(rollbackFor = Exception.class)
     int descNumber(Long brandId);
+
+    List<StockDto> listStockDto(StockArgs stockArgs);
+
 
 }

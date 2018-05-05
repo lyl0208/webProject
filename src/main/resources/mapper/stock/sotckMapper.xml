@@ -12,6 +12,14 @@
         <result column="number" property="number" jdbcType="INTEGER"/>
     </resultMap>
 
+    <resultMap id="stockDtoMap" type="com.myweb.stock.model.StockDto">
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="model_name" property="modelName" jdbcType="VARCHAR"/>
+        <result column="color_name" property="colorName" jdbcType="VARCHAR"/>
+        <result column="memory_name" property="memoryName" jdbcType="VARCHAR"/>
+        <result column="number" property="number" jdbcType="INTEGER"/>
+    </resultMap>
+
 
     <select id="findStock" parameterType="com.myweb.stock.model.StockArgs" resultMap="stockMap">
         SELECT
@@ -62,5 +70,30 @@
         WHERE
           stock_id = #{stockId}
     </update>
+
+    <select id="listStockDto" resultMap="stockDtoMap" parameterType="com.myweb.stock.model.StockArgs">
+        SELECT
+          pb.brand_name,
+          pc.color_name,
+          pme.memory_name,
+          pmo.model_name,
+          s.number
+        FROM
+          stock_info AS s
+        LEFT JOIN phone_brand AS pb ON s.brand_id = pb.brand_id
+        LEFT JOIN phone_color AS pc ON s.color_id = pc.color_id
+        LEFT JOIN phone_memory AS pme ON s.memory_id = pme.memory_id
+        LEFT JOIN phone_model AS pmo ON s.model_id = pmo.model_id
+        <where>
+            <trim prefixOverrides="and">
+                <if test="brandName != null and brandName != ''">pb.brand_name like '%${brandName}%'</if>
+                <if test="colorName != null and colorName != ''">pc.color_name like '%${colorName}%'</if>
+                <if test="memoryName != null and memoryName != ''">pme.memory_name like '%${memoryName}%'</if>
+                <if test="modelName != null and modelName != ''">pmo.model_name like '%${modelName}%'</if>
+            </trim>
+        </where>
+    </select>
+
+
 
 </mapper>

@@ -1,55 +1,41 @@
 package com.myweb.stock.model;
 
-import com.myweb.core.BaseArgs;
+/**
+ * 库存页面展示
+ */
+public class StockDto {
 
-public class StockArgs extends BaseArgs {
-
-    private Long brandId;
-
+    /**
+     * 品牌名
+     */
     private String brandName;
 
-    private Long colorId;
-
+    /**
+     * 颜色名
+     */
     private String colorName;
 
-    private Long modelId;
-
+    /**
+     * 型号名
+     */
     private String modelName;
 
-    private Long memoryId;
-
+    /**
+     * 内存名
+     */
     private String memoryName;
 
-    public Long getBrandId() {
-        return brandId;
+    /**
+     * 库存数量
+     */
+    private Integer number;
+
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setBrandId(Long brandId) {
-        this.brandId = brandId;
-    }
-
-    public Long getColorId() {
-        return colorId;
-    }
-
-    public void setColorId(Long colorId) {
-        this.colorId = colorId;
-    }
-
-    public Long getModelId() {
-        return modelId;
-    }
-
-    public void setModelId(Long modelId) {
-        this.modelId = modelId;
-    }
-
-    public Long getMemoryId() {
-        return memoryId;
-    }
-
-    public void setMemoryId(Long memoryId) {
-        this.memoryId = memoryId;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public String getBrandName() {

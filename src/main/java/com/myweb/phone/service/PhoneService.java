@@ -1,6 +1,7 @@
 package com.myweb.phone.service;
 
 import com.myweb.core.PageResult;
+import com.myweb.core.exception.BusinessException;
 import com.myweb.phone.model.*;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public interface PhoneService {
 
     PageResult<PhoneInfo> listPhone(PhoneArgs args);
 
-    boolean addPhone(PhoneInfo phone);
+    boolean addPhone(PhoneInfo phone) throws BusinessException;
 
-    boolean editPhone(PhoneInfo phoneInfo);
+    boolean editPhone(PhoneInfo phoneInfo) throws BusinessException;
 
     List<PhoneBrand> getBrands();
 

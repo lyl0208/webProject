@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.phone.dao.RecycleLogMapper">
+
+    <resultMap id="recycleLogMap" type="com.myweb.phone.model.RecycleLog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="serial_number" property="serialNumber" jdbcType="VARCHAR"/>
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="recycle_date" property="recycleDate" jdbcType="TIMESTAMP"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="model_name" property="modelName" jdbcType="VARCHAR"/>
+        <result column="color_name" property="colorName" jdbcType="VARCHAR"/>
+        <result column="memory_name" property="memoryName" jdbcType="VARCHAR"/>
+        <result column="recycle_price" property="recyclePrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="countBySerialNumber" resultType="java.lang.Integer">
+        select
+          count(1)
+        from
+          recycle_log
+        where
+          serial_number = #{serialNumber}
+    </select>
+
+    <select id="listRecycleLog" resultMap="recycleLogMap">
+        select
+          *
+        from
+          recycle_log
+    </select>
+
+    <insert id="save">
+        insert into
+          recycle_log
+        (
+          serial_number,
+          imei,
+          recycle_date,
+          brand_name,
+          model_name,
+          color_name,
+          memory_name,
+          recycle_price
+        )
+        VALUES
+        (
+          #{serialNumber,jdbcType=VARCHAR}
+          ,#{imei,jdbcType=VARCHAR}
+          ,#{recycleDate,jdbcType=TIMESTAMP}
+          ,#{brandName,jdbcType=VARCHAR}
+          ,#{modelName,jdbcType=VARCHAR}
+          ,#{colorName,jdbcType=VARCHAR}
+          ,#{memoryName,jdbcType=VARCHAR}
+          ,#{recyclePrice,jdbcType=DECIMAL}
+        )
+    </insert>
+
+
+    <select id="getRecycleLogByImei" resultMap="recycleLogMap">
+        select
+          *
+        from
+          recycle_log
+        where
+          imei=#{imei}
+    </select>
+
+    <update id="update">
+        update
+          recycle_log
+        <set>
+            <trim suffixOverrides=",">
+                <if test="imei != null and imei != ''">
+                    imei=#{imei,jdbcType=VARCHAR},
+                </if>
+                <if test="brandName != null and brandName != ''">
+                    brand_name = #{brandName,jdbcType=VARCHAR},
+                </if>
+                <if test="modelName != null and modelName != ''">
+                    model_name = #{modelName,jdbcType=VARCHAR},
+                </if>
+                <if test="colorName != null and colorName != ''">
+                    color_name = #{colorName,jdbcType=VARCHAR},
+                </if>
+                <if test="memoryName != null and memoryName != ''">
+                    memory_name = #{memoryName,jdbcType=VARCHAR},
+                </if>
+                <if test="recyclePrice != null">
+                    recycle_price = #{recyclePrice,jdbcType=DECIMAL},
+                </if>
+            </trim>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+</mapper>

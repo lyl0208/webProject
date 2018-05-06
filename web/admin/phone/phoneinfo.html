@@ -1,3 +1,7 @@
+<div class="content-header">
+    <h2 class="content-title">二手手机档案信息管理</h2>
+</div>
+
 <div>
     <div class="layui-form toolbar">
         搜索：
@@ -103,7 +107,9 @@
 
 <!-- 表格操作列 -->
 <script type="text/html" id="barTpl">
+    {{# if(d.state !== '4'){ }}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+    {{# } }}
 </script>
 
 <!--品牌下拉框模板-->

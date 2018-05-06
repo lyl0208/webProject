@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.sell.dao.SellingDetailMapper">
+
+    <resultMap id="sellingDetailMap" type="com.myweb.sell.model.SellingDetail">
+        <result column="selling_id" property="sellingId" jdbcType="VARCHAR"/>
+        <result column="imei" property="IMEI" jdbcType="VARCHAR"/>
+        <result column="serial_number" property="serialNumber" jdbcType="VARCHAR"/>
+        <result column="transaction_price" property="transactionPrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <insert id="save">
+        INSERT INTO
+          selling_detail
+        (
+          selling_id,
+          imei,
+          serial_number,
+          transaction_price
+        )
+        VALUES
+        (
+          #{sellingId},
+          #{IMEI},
+          #{serialNumber},
+          #{transactionPrice}
+        )
+    </insert>
+
+    <select id="countBySellingId" resultType="java.lang.Integer">
+        select
+          count(1)
+        from
+          selling_detail
+        where
+          selling_id = #{sellingId}
+    </select>
+
+</mapper>

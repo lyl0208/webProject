@@ -3,6 +3,7 @@ package com.myweb.phone.dao;
 import com.myweb.phone.model.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PhoneMapper {
@@ -38,5 +39,12 @@ public interface PhoneMapper {
     PhoneInfo findPhoneById(Long phoneId);
 
     PhoneInfo findPhoneByImei(String imei);
+
+    /**
+     * 获取成本价（回收价+维修价）
+     * @param imei imei编号
+     * @return
+     */
+    BigDecimal getCostByImei(String imei);
 
 }

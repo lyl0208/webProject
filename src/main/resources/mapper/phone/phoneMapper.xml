@@ -270,23 +270,50 @@
 
     <select id="findPhoneById" resultMap="phoneMap">
         select
-          *
+          p.*,
+          pb.brand_name,
+          pmo.model_name,
+          pme.memory_name,
+          pc.color_name
         from
-          phone_info
+          phone_info as p
+        left join phone_brand as pb on pb.brand_id = p.brand_id
+        left join phone_model as pmo on pmo.model_id = p.model_id
+        left join phone_color as pc on pc.color_id = p.color_id
+        left join phone_memory as pme on pme.memory_id = p.memory_id
         where
           phone_id = #{phoneId}
     </select>
 
     <select id="findPhoneByImei" resultMap="phoneMap">
         select
-          *
+          p.*,
+          pb.brand_name,
+          pmo.model_name,
+          pme.memory_name,
+          pc.color_name
         from
-          phone_info
+          phone_info as p
+        left join phone_brand as pb on pb.brand_id = p.brand_id
+        left join phone_model as pmo on pmo.model_id = p.model_id
+        left join phone_color as pc on pc.color_id = p.color_id
+        left join phone_memory as pme on pme.memory_id = p.memory_id
         where
           imei = #{imei}
         ORDER BY
-          phone_id DESC
+          p.phone_id DESC
         limit 1
+    </select>
+
+
+    <select id="getCostByImei" resultType="java.math.BigDecimal">
+        select
+          p.recovery_price + IFNULL(r.amount_complained,0)
+        from
+          phone_info as p
+        left join repair as r on p.imei = r.imei
+        where
+          p.imei = #{imei}
     </select>
 
 

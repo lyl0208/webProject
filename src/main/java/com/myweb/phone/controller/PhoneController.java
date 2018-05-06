@@ -3,6 +3,7 @@ package com.myweb.phone.controller;
 import com.myweb.core.BaseController;
 import com.myweb.core.PageResult;
 import com.myweb.core.ResultMap;
+import com.myweb.core.exception.BusinessException;
 import com.myweb.phone.model.*;
 import com.myweb.phone.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PhoneController extends BaseController {
     }
 
     @PostMapping("/addPhone")
-    private ResultMap addPhone(PhoneInfo phoneInfo) {
+    private ResultMap addPhone(PhoneInfo phoneInfo) throws BusinessException {
         if (phoneService.addPhone(phoneInfo)) {
             return ResultMap.ok("添加成功");
         } else {
@@ -35,7 +36,7 @@ public class PhoneController extends BaseController {
     }
 
     @PostMapping("/editPhone")
-    private ResultMap editPhone(PhoneInfo phoneInfo) {
+    private ResultMap editPhone(PhoneInfo phoneInfo) throws BusinessException {
         if (phoneService.editPhone(phoneInfo)) {
             return ResultMap.ok("修改成功");
         } else {

@@ -68,7 +68,6 @@ function initNav() {
     var indexNavStr = sessionStorage.getItem("index-nav");
     var indexNav = JSON.parse(indexNavStr);
     var user = getCurrentUser();
-    console.log(user);
     if (indexNav == null || indexNav.length === 0) {
         var permissions = [];
         for (var i = 0; i < user.roles.length; i++) {

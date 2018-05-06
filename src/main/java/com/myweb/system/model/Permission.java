@@ -1,5 +1,6 @@
 package com.myweb.system.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Permission {
 
     private String permissionIcon;
 
-    private List<Permission> subPermission;
+    private List<Permission> subPermissions = new ArrayList<>();
 
     private Date createTime;
 
@@ -63,12 +64,12 @@ public class Permission {
         this.permissionValue = permissionValue;
     }
 
-    public List<Permission> getSubPermission() {
-        return subPermission;
+    public List<Permission> getSubPermissions() {
+        return subPermissions;
     }
 
-    public void setSubPermission(List<Permission> subPermission) {
-        this.subPermission = subPermission;
+    public void setSubPermissions(List<Permission> subPermissions) {
+        this.subPermissions = subPermissions;
     }
 
     public String getPermissionIcon() {

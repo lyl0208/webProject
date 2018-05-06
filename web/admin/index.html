@@ -54,14 +54,14 @@
 <script id="sideNav" type="text/html">
     {{#  layui.each(d, function(index, item){ }}
     <li class="layui-nav-item">
-        {{# if(item.subMenus == null || item.subMenus.length === 0){ }}
+        {{# if(item.subPermissions == null || item.subPermissions.length === 0){ }}
         <a class="" href="#!{{ item.permissionValue }}"><i class="layui-icon">{{ item.permissionIcon }}</i>&emsp;<span>{{ item.permissionName }}</span></a>
-        {{# }else if(item.subMenus != null && item.subMenus.length > 0){ }}
+        {{# }else if(item.subPermissions != null && item.subPermissions.length > 0){ }}
         <a class="" href="javascript:openNavItem();"><i class="layui-icon">{{ item.permissionIcon }}</i>&emsp;<span>{{ item.permissionName }}</span></a>
         <dl class="layui-nav-child">
-            {{# layui.each(item.subMenus, function(index, subItem){ }}
+            {{# layui.each(item.subPermissions, function(index, subItem){ }}
             <dd>
-                <a href="javascript:load('{{ item.permissionValue }}')">{{ subItem.permissionName }}</a>
+                <a class="" href="#!{{ subItem.permissionValue }}")>{{ subItem.permissionName }}</a>
             </dd>
             {{# }); }}
         </dl>

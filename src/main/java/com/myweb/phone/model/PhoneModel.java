@@ -8,6 +8,8 @@ public class PhoneModel {
 
     private Long brandId;
 
+    private String img;
+
     public Long getModelId() {
         return modelId;
     }
@@ -30,5 +32,13 @@ public class PhoneModel {
 
     public void setBrandId(Long brandId) {
         this.brandId = brandId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

@@ -77,8 +77,12 @@ function showPicModel(data) {
         title:'查看图片',
         area:['350px','400px'],
         offset: '120px',
-        content:'<div><img style="width: 100%;height: 100%" src="/static/images/phoneImg/'+data.img+'"</div>'
+        content:'<div><img onerror="this.src=defaultPic()" style="width: 100%;height: 100%" src="/static/images/phoneImg/'+data.img+'"</div>'
     })
+}
+
+function defaultPic() {
+    return "/static/images/no_pic.jpg";
 }
 
 //显示表单弹窗

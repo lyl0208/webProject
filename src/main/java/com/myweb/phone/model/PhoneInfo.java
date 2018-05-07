@@ -90,7 +90,19 @@ public class PhoneInfo {
      */
     private String sellingId;
 
+    /**
+     * 图片
+     */
+    private String img;
 
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public String getIMEI() {
         return IMEI;

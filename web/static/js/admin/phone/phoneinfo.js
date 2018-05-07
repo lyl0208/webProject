@@ -56,12 +56,11 @@ $(function() {
 
         if(layEvent === 'edit'){ //修改
             showEditModel(data);
-        } else if(layEvent === 'del'){ //删除
-            doDelete(obj);
-        } else if(layEvent === 'reset'){ //重置密码
-            doReSet(obj.data.userId);
+        } else if (layEvent === 'checkPic') {
+            showPicModel(data);
         }
     });
+
 
     //搜索按钮点击事件
     $("#searchBtn").click(function(){
@@ -70,6 +69,17 @@ $(function() {
 
 
 });
+
+//显示手机图片
+function showPicModel(data) {
+    layer.open({
+        type:1,
+        title:'查看图片',
+        area:['350px','400px'],
+        offset: '120px',
+        content:'<div><img style="width: 100%;height: 100%" src="/static/images/phoneImg/'+data.img+'"</div>'
+    })
+}
 
 //显示表单弹窗
 function showEditModel(data){
@@ -99,10 +109,42 @@ function showEditModel(data){
             $('#protectionYes').removeAttribute("checked");
         }
         $("#editForm").attr("action","/api/phone/editPhone");
+        $('#demo1').attr('src','/static/images/phoneImg/'+data.img);
     }
     $("#btnCancel").click(function(){
         layer.closeAll('page');
     });
+
+    //渲染上传按钮
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        var uploadInst = upload.render({
+            elem:'#imgUpload'//绑定元素
+            ,url:'/upload'
+            ,data:{type:'phone'}
+            ,before:function (obj) {
+                obj.preview(function (index,file,result) {
+                    $('#demo1').attr('src',result);
+                });
+            }
+            ,done:function (res) {
+                //如果上传失败
+                if (res.code !== 200) {
+                    layer.msg("服务器繁忙，请重试");
+                    $('#demo1').removeAttr("src");
+                    return ;
+                }
+                //上传成功
+                document.getElementById("img_url").value = res.url;
+            }
+            ,error:function () {
+                layer.msg("服务器繁忙，请重试");
+                $('#demo1').removeAttr("src");
+            }
+        });
+    });
+
+
     //表单验证
     layui.form.verify({
         money: function (value,item) {

@@ -28,6 +28,22 @@
     <form id="editForm" class="layui-form model-form" action="">
         <input type="hidden" name="phoneId"/>
         <div class="layui-form-item">
+            <label class="layui-form-label">手机图片</label>
+            <div class="layui-input-block layui-upload">
+                <!--上传按钮-->
+                <button type="button" class="layui-btn" id="imgUpload"><i class="layui-icon">&#xe67c;</i>上传图片</button>
+
+                <!--隐藏的input，保存图片url-->
+                <input type="hidden" id="img_url" name="img" value="" lay-verify="required" required>
+
+                <!--预览区域-->
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" width="100px" height="80px" id="demo1"/>
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">IMEI</label>
             <div class="layui-input-block">
                 <input name="IMEI" placeholder="请输入IMEI" type="text" class="layui-input" maxlength="20" lay-verify="required|IMEI" required />
@@ -110,6 +126,11 @@
     {{# if(d.state !== '4'){ }}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
     {{# } }}
+    {{# if(d.img !== null ){ }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="checkPic">查看图片</a>
+    {{# } else { }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" disabled="disabled">暂无图片</a>
+    {{# }  }}
 </script>
 
 <!--品牌下拉框模板-->

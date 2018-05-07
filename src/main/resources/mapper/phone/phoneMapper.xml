@@ -21,6 +21,7 @@
         <result column="recovery_price" property="recoveryPrice" jdbcType="DECIMAL"/>
         <result column="reference_selling_price" property="referenceSellingPrice" jdbcType="DECIMAL"/>
         <result column="selling_id" property="sellingId" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="listPhone" resultMap="phoneMap" parameterType="com.myweb.phone.model.PhoneArgs">
@@ -81,6 +82,9 @@
             <if test="sellingId != null and sellingId != ''">
                 selling_id,
             </if>
+            <if test="img != null and img != ''">
+                img,
+            </if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -119,6 +123,9 @@
             </if>
             <if test="sellingId != null and sellingId != ''">
                 #{sellingId,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null and img != ''">
+                #{img,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -163,6 +170,9 @@
                 </if>
                 <if test="sellingId != null and sellingId != ''">
                     selling_id=#{sellingId,jdbcType=VARCHAR},
+                </if>
+                <if test="img != null and img != ''">
+                    img = #{img}
                 </if>
             </trim>
         </set>

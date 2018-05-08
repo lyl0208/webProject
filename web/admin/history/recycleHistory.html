@@ -2,7 +2,16 @@
     <h2 class="content-title">回收记录查询</h2>
 </div>
 
-<!--数据表格-->
-<table class="layui-table" id="table" lay-filter="table"></table>
+<div>
+    <div class="layui-form toolbar">
+        回收单号:
+        <input id="serialNumber" class="layui-input search-input" type="text" placeholder="请输入回收单号"/>
+        <button id="searchBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
+
+    <!--数据表格-->
+    <table class="layui-table" id="table" lay-filter="table"></table>
+
+</div>
 
 <script type="text/javascript" src="/static/js/admin/history/recycleHistory.js"></script>

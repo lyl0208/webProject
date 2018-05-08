@@ -25,5 +25,13 @@ $(function () {
         ]]
     });
 
+    //搜索按钮点击事件
+    $("#searchBtn").click(function(){
+        doSearch(table);
+    });
 
 });
+
+function doSearch(table) {
+    layui.table.reload('table', {where: {sellingId: $('#sellingId').val().trim()}});
+}

@@ -5,14 +5,17 @@ import com.github.pagehelper.PageHelper;
 import com.myweb.core.PageResult;
 import com.myweb.core.utils.AesUtils;
 import com.myweb.system.dao.UserMapper;
+import com.myweb.system.model.Role;
 import com.myweb.system.model.User;
 import com.myweb.system.model.UserArgs;
 import com.myweb.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +34,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findUserByUsername(String username) {
-        return userMapper.findUserByUsername(username);
+        User user = userMapper.findUserByUsername(username);
+        for (Role role : user.getRoles()) {
+            Collections.sort(role.getPermissions());
+        }
+        return user;
     }
 
     @Override

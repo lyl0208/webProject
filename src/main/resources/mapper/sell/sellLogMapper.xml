@@ -22,6 +22,11 @@
           *
         FROM
           sell_log
+        <where>
+            <trim prefixOverrides="and">
+                <if test="sellingId != null and sellingId != ''">and selling_id = #{sellingId}</if>
+            </trim>
+        </where>
     </select>
 
     <insert id="save">

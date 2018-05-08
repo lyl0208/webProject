@@ -24,6 +24,7 @@
                 <result column="permission_value" property="permissionValue" jdbcType="VARCHAR"/>
                 <result column="permission_icon" property="permissionIcon" jdbcType="VARCHAR"/>
                 <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+                <result column="order" property="order" jdbcType="INTEGER"/>
             </collection>
 
         </collection>

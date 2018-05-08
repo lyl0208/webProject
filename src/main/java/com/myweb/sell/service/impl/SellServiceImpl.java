@@ -135,7 +135,7 @@ public class SellServiceImpl implements SellService {
             sellLogMapper.save(sellLog);
         }
 
-        return ResultMap.ok("处理成功");
+        return ResultMap.ok("处理成功").put("sellSlip",sellSlip);
     }
 
     /**

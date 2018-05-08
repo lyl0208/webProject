@@ -30,6 +30,11 @@
           *
         from
           recycle_log
+        <where>
+            <trim prefixOverrides="and">
+                <if test="serialNumber != null and serialNumber != ''">serial_number = #{serialNumber}</if>
+            </trim>
+        </where>
     </select>
 
     <insert id="save">

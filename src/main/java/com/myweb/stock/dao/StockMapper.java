@@ -1,5 +1,8 @@
 package com.myweb.stock.dao;
 
+import com.myweb.phone.model.PhoneModel;
+import com.myweb.picture.model.FrontPictureArgs;
+import com.myweb.picture.model.FrontPictureDto;
 import com.myweb.stock.model.StockArgs;
 import com.myweb.stock.model.StockDto;
 import com.myweb.stock.model.StockInfo;
@@ -21,6 +24,11 @@ public interface StockMapper {
     int descNumber(Long brandId);
 
     List<StockDto> listStockDto(StockArgs stockArgs);
+
+    List<FrontPictureDto> listFrontPictureDto(FrontPictureArgs args);
+
+    @Transactional(rollbackFor = Exception.class)
+    int addFrontPicture(PhoneModel phoneModel);
 
 
 }

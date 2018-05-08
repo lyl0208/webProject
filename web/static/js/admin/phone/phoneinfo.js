@@ -22,6 +22,13 @@ $(function() {
             {field:'recoveryPrice',sort:true,title:'回收价'},
             {field:'referenceSellingPrice',sort:true,title:'参考销售价'},
             {field:'sellingId',sort:true,title:'销售明细编号'},
+            {field:'img',sort:true,title:'图片',templet:function (d) {
+                if (d.img === null) {
+                    return '无';
+                } else {
+                    return '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="showPicModel(\''+d.img+'\')">查看图片</a>';
+                }
+            }},
             {align:'center', toolbar: '#barTpl', minWidth: 180, title: '操作'}
         ]]
     });
@@ -56,8 +63,6 @@ $(function() {
 
         if(layEvent === 'edit'){ //修改
             showEditModel(data);
-        } else if (layEvent === 'checkPic') {
-            showPicModel(data);
         }
     });
 
@@ -71,13 +76,15 @@ $(function() {
 });
 
 //显示手机图片
-function showPicModel(data) {
+function showPicModel(img) {
+    var imagePath = img.substring(0,img.indexOf('.'));
+    var type = img.substring(img.indexOf('.') + 1);
     layer.open({
         type:1,
         title:'查看图片',
         area:['350px','400px'],
         offset: '120px',
-        content:'<div><img onerror="this.src=defaultPic()" style="width: 100%;height: 100%" src="/static/images/phoneImg/'+data.img+'"</div>'
+        content:'<div><img onerror="this.src=defaultPic()" style="width: 100%;height: 100%" src="/image/'+imagePath+'/'+type+'"/></div>'
     })
 }
 
@@ -113,7 +120,7 @@ function showEditModel(data){
             $('#protectionYes').removeAttribute("checked");
         }
         $("#editForm").attr("action","/api/phone/editPhone");
-        $('#demo1').attr('src','/static/images/phoneImg/'+data.img);
+        $('#demo1').attr('src','/image/'+data.img.substring(0,data.img.indexOf('.')) + '/' + data.img.substring(data.img.indexOf('.') + 1));
     }
     $("#btnCancel").click(function(){
         layer.closeAll('page');
@@ -125,7 +132,6 @@ function showEditModel(data){
         var uploadInst = upload.render({
             elem:'#imgUpload'//绑定元素
             ,url:'/upload'
-            ,data:{type:'phone'}
             ,before:function (obj) {
                 obj.preview(function (index,file,result) {
                     $('#demo1').attr('src',result);

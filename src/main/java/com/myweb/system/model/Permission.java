@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 权限
  */
-public class Permission {
+public class Permission implements Comparable<Permission> {
 
 
     private Long permissionId;
@@ -23,6 +23,8 @@ public class Permission {
     private List<Permission> subPermissions = new ArrayList<>();
 
     private Date createTime;
+
+    private Integer order;
 
     public Long getPermissionId() {
         return permissionId;
@@ -78,5 +80,23 @@ public class Permission {
 
     public void setPermissionIcon(String permissionIcon) {
         this.permissionIcon = permissionIcon;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    @Override
+    public int compareTo(Permission o) {
+        if (order == null) {
+            return 1;
+        } else if (o.order == null) {
+            return -1;
+        }
+        return order - o.order;
     }
 }

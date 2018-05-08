@@ -24,10 +24,61 @@
 
         </ul>
         <div class="layui-form-item model-form-footer">
-            <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+            <button class="layui-btn" lay-filter="btnSubmit" lay-submit>销售</button>
+            <a class="layui-btn" id="printTicketBtn">测试小票</a>
         </div>
         </form>
     </div>
+
 </fieldset>
+
+<!--小票模板-->
+<script type="text/html" id="ticket">
+    <table border="1" cellspacing="0" cellpadding="0"  style="width: 100%">
+        <tr>
+            <td style="width: 33%">
+                销售单号
+            </td>
+            <td id="serialNumber">
+                1231231231233121231321
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 33%">
+                经办人
+            </td>
+            <td id="operatorName">
+                管理员
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 33%">
+                销售日期
+            </td>
+            <td id="saleDate">
+                2018-5-8 10:46:22
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 33%">
+                数量
+            </td>
+            <td id="number">
+                2
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 33%"></td>
+        </tr>
+        <tr>
+            <td style="width: 33%;">
+                总价
+            </td>
+            <td id="totalPrice">
+                5000.00
+            </td>
+        </tr>
+    </table>
+</script>
 
 <script type="text/javascript" src="/static/js/admin/sell/sell.js"></script>

@@ -1,3 +1,71 @@
 <div class="content-header">
     <h2 class="content-title">前台图片管理</h2>
 </div>
+
+
+<div>
+    <div class="layui-form toolbar">
+        品牌名:
+        <input id="brandName" class="layui-input search-input" type="text" placeholder="请输入品牌名"/>
+        型号名:
+        <input id="modelName" class="layui-input search-input" type="text" placeholder="请输入型号名"/>
+        图片：
+        <select id="hasImgSelect" lay-filter="hasImgSelect" name="hasImg">
+            <option value="">请选择</option>
+            <option value=0>无</option>
+            <option value=1>有</option>
+        </select>
+        <button id="searchBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
+
+    <!--数据表格-->
+    <table class="layui-table" id="table" lay-filter="table"></table>
+
+</div>
+
+<!--编辑弹出框-->
+<script id="addModel" type="text/html">
+    <form id="editForm" class="layui-form model-form" action="/api/frontPicture/add">
+        <input type="hidden" name="modelId">
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机图片</label>
+            <div class="layui-input-block layui-upload">
+                <!--上传按钮-->
+                <button type="button" class="layui-btn" id="imgUpload"><i class="layui-icon">&#xe67c;</i>上传图片</button>
+
+                <!--隐藏的input，保存图片url-->
+                <input type="hidden" id="img_url" name="img" value="" lay-verify="required" required>
+
+                <!--预览区域-->
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" width="100px" height="80px" id="demo1"/>
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">品牌</label>
+            <div class="layui-input-block">
+                <input name="brandName" type="text" class="layui-input" maxlength="20" lay-verify="required" required  readonly/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">型号</label>
+            <div class="layui-input-block">
+                <input name="modelName" type="text" class="layui-input" maxlength="20" lay-verify="required" required  readonly/>
+            </div>
+        </div>
+
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+            <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">管理图片</a>
+</script>
+
+<script type="text/javascript" src="/static/js/admin/picture/frontPicture.js"></script>

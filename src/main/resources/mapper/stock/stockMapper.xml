@@ -20,6 +20,13 @@
         <result column="number" property="number" jdbcType="INTEGER"/>
     </resultMap>
 
+    <resultMap id="frontPictureDtoMap" type="com.myweb.picture.model.FrontPictureDto">
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="model_name" property="modelName" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="model_id" property="modelId" jdbcType="INTEGER"/>
+    </resultMap>
+
 
     <select id="findStock" parameterType="com.myweb.stock.model.StockArgs" resultMap="stockMap">
         SELECT
@@ -86,13 +93,41 @@
         LEFT JOIN phone_model AS pmo ON s.model_id = pmo.model_id
         <where>
             <trim prefixOverrides="and">
-                <if test="brandName != null and brandName != ''">pb.brand_name like '%${brandName}%'</if>
-                <if test="colorName != null and colorName != ''">pc.color_name like '%${colorName}%'</if>
-                <if test="memoryName != null and memoryName != ''">pme.memory_name like '%${memoryName}%'</if>
-                <if test="modelName != null and modelName != ''">pmo.model_name like '%${modelName}%'</if>
+                <if test="brandName != null and brandName != ''">and pb.brand_name like '%${brandName}%'</if>
+                <if test="colorName != null and colorName != ''">and pc.color_name like '%${colorName}%'</if>
+                <if test="memoryName != null and memoryName != ''">and pme.memory_name like '%${memoryName}%'</if>
+                <if test="modelName != null and modelName != ''">and pmo.model_name like '%${modelName}%'</if>
             </trim>
         </where>
+        ORDER BY s.number DESC
     </select>
+
+    <select id="listFrontPictureDto" resultMap="frontPictureDtoMap" parameterType="com.myweb.picture.model.FrontPictureArgs">
+        SELECT
+          pb.brand_name,
+          pmo.model_name,
+          pmo.img,
+          pmo.model_id
+        FROM
+          phone_brand AS pb,phone_model AS pmo
+        WHERE
+          pb.brand_id = pmo.brand_id
+          <trim suffixOverrides="and">
+              <if test="brandName != null and brandName != ''">and pb.brand_name like '%${brandName}%'</if>
+              <if test="modelName != null and modelName != ''">and pmo.model_name like '%${modelName}%'</if>
+              <if test="hasImg != null and hasImg == 1">and pmo.img != '' and pmo.img is not null </if>
+              <if test="hasImg != null and hasImg == 0">and (pmo.img is null or pmo.img = '')</if>
+          </trim>
+    </select>
+
+    <insert id="addFrontPicture" parameterType="com.myweb.phone.model.PhoneModel">
+        UPDATE
+          phone_model
+        SET
+          img = #{img}
+        WHERE
+          model_id = #{modelId}
+    </insert>
 
 
 

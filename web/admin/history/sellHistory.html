@@ -1,8 +1,14 @@
 <div class="content-header">
     <h2 class="content-title">销售记录查询</h2>
 </div>
+<div>
+    <div class="layui-form toolbar">
+        销售明细单号:
+        <input id="sellingId" class="layui-input search-input" type="text" placeholder="请输入销售明细单号"/>
+        <button id="searchBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
 
-<!--数据表格-->
-<table class="layui-table" id="table" lay-filter="table"></table>
-
+    <!--数据表格-->
+    <table class="layui-table" id="table" lay-filter="table"></table>
+</div>
 <script type="text/javascript" src="/static/js/admin/history/sellHistory.js"></script>

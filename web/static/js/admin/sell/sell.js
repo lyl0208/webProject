@@ -1,3 +1,5 @@
+//出售成功之后的销售单
+var sellSlip = null;
 $(function () {
 
     //表单提交事件
@@ -18,6 +20,11 @@ $(function () {
                 imeiInput.val('');
                 pricesInput.val('');
                 layer.msg(data.msg,{icon: 1});
+                sellSlip = data.sellSlip;
+                layer.confirm('是否打印小票',function () {
+                    printTicket();
+                    layer.close();
+                })
             }else{
                 layer.msg(data.msg,{icon: 2});
             }
@@ -36,6 +43,10 @@ $(function () {
         IMEI:[ /^[\S]{15,17}$/
             , '请输入正确的IMEI']
     });
+
+    $('#printTicketBtn').click(function () {
+        printTicket();
+    })
 });
 
 
@@ -58,4 +69,26 @@ function addDetail() {
         "                    </div>\n" +
         "                </div>\n" +
         "            </li>\n");
+}
+
+function printTicket() {
+    if (sellSlip === null) {
+        layer.msg("请先出售手机");
+        return;
+    }
+
+
+    var wind = window.open("",'打印小票','height=300,width=700,top=100,left=100,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
+
+    $('#serialNumber').html(sellSlip.serialNumber);
+    $('#operatorName').html(getCurrentUser().realName);
+    $('#saleDate').html(sellSlip.saleDate);
+    $('#number').html(sellSlip.number);
+    $('#totalPrice').html(sellSlip.totalPrice);
+
+    wind.document.body.innerHTML =  document.getElementById('ticket').innerHTML;
+
+    wind.print();
+    wind.close();
+
 }

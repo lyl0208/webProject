@@ -204,14 +204,14 @@
 
     <select id="getModels" resultType="com.myweb.phone.model.PhoneModel">
         SELECT
-          model_id AS modelId,
-          model_name AS modelName,
-          brand_id AS brandId,
-          img AS img
+          pmo.model_id AS modelId,
+          pmo.model_name AS modelName,
+          pmo.brand_id AS brandId,
+          pmo.img AS img
         FROM
-          phone_model
+          phone_model AS pmo
         WHERE
-          brand_id = #{brandId}
+          pmo.brand_id = #{brandId}
     </select>
 
     <insert id="addModel" useGeneratedKeys="true" keyProperty="modelId" keyColumn="model_id">
@@ -325,6 +325,24 @@
         left join repair as r on p.imei = r.imei
         where
           p.imei = #{imei}
+    </select>
+
+    <select id="listPhoneInfoByModelId" resultMap="phoneMap">
+        SELECT
+          p.*,
+          pb.brand_name,
+          pc.color_name,
+          pmo.model_name,
+          pme.memory_name
+        FROM
+          phone_info AS p
+        LEFT JOIN phone_brand AS pb ON p.brand_id = pb.brand_id
+        LEFT JOIN phone_model AS pmo ON p.model_id = pmo.model_id
+        LEFT JOIN phone_color AS pc ON p.color_id = pc.color_id
+        LEFT JOIN phone_memory AS pme ON p.memory_id = pme.memory_id
+        WHERE
+          p.state = 3
+        AND p.model_id = #{modelId}
     </select>
 
 

@@ -38,3 +38,7 @@ function listPhoneItem(brandId) {
 function defaultPic() {
     return "/static/images/no_pic.jpg";
 }
+
+function goDetail(modelId) {
+    window.open("detail.html?modelId="+modelId);
+}

@@ -32,6 +32,7 @@
             height: 100px;
             margin-top: 20px;
             margin-left: 10px;
+            background-color: white;
         }
 
         .logo {
@@ -87,7 +88,7 @@
 <body>
 <div class="layui-row header">
     <div class="layui-col-md2 logo-container">
-        <img src="/static/images/no_pic.jpg" class="logo">
+        <img src="/static/images/frontLogo.jpg" class="logo">
     </div>
 </div>
 <div class="layui-container container">
@@ -125,7 +126,7 @@
     {{#  } }}
     {{# layui.each(d,function(index,item){ }}
        {{# var imgUrl = null; if(item.img !== null){ imgUrl = '/image/'+item.img.substring(0,item.img.indexOf('.')) + '/' + item.img.substring(item.img.indexOf('.')+1)} }}
-        <li class="phone-item layui-container">
+        <li class="phone-item layui-container" onclick="goDetail('{{item.modelId}}')">
             <div class="layui-row">
                 <img onerror="this.src=defaultPic()" src="{{imgUrl}}" style="height: 250px; width: 80%">
             </div>

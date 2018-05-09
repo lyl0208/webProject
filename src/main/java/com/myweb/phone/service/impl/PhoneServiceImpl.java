@@ -179,6 +179,11 @@ public class PhoneServiceImpl implements PhoneService {
         return phoneMapper.addMemory(phoneMemory) > 0;
     }
 
+    @Override
+    public List<PhoneInfo> listPhoneInfoByModelId(Long modelId) {
+        return phoneMapper.listPhoneInfoByModelId(modelId);
+    }
+
     private String genRecycleLogSerialNumer() {
         Random r = new Random();
         String str = "H";

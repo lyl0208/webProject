@@ -30,5 +30,7 @@ public interface PhoneService {
 
     boolean addMemory(PhoneMemory phoneMemory);
 
+    List<PhoneInfo> listPhoneInfoByModelId(Long modelId);
+
 
 }

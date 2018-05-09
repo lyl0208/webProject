@@ -20,7 +20,7 @@ public class UploadController {
         //如果文件内容不为空，则写入上传路径
         if (!file.isEmpty()) {
             //上传文件名
-            String fileName = UUIDUtil.randomUUID8() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf(".") - 1);
+            String fileName = UUIDUtil.randomUUID8() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
             File filePath = new File(WebContent.UPLOAD_PATH,fileName);
 
             //判断路径是否存在，没有就创建一个

@@ -47,4 +47,6 @@ public interface PhoneMapper {
      */
     BigDecimal getCostByImei(String imei);
 
+    List<PhoneInfo> listPhoneInfoByModelId(Long modelId);
+
 }

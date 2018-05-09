@@ -10,6 +10,7 @@ public class PhoneModel {
 
     private String img;
 
+
     public Long getModelId() {
         return modelId;
     }
@@ -41,4 +42,5 @@ public class PhoneModel {
     public void setImg(String img) {
         this.img = img;
     }
+
 }

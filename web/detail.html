@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/libs/layui/css/layui.css"/>
+    <meta charset="UTF-8">
+    <title>手机详情查看</title>
+
+    <style>
+        .phone-detail-container{
+            margin-top: 10px;
+            min-height: 800px;
+            max-height: 800px;
+            overflow-y: auto;
+            border: 1px solid gray;
+        }
+        .phone-detail-item{
+            height: 400px;
+            padding: 20px 10px 10px;
+        }
+        .phone-detail-img-container{
+            height: 350px;
+        }
+        .phone-detail-img{
+            width: 100%;
+            height:100%;
+        }
+        .phone-detail-desc{
+            height: 350px;
+            text-align: center;
+            font-family:"Microsoft YaHei UI";
+            font-size: 20px;
+        }
+
+        table.gridtable {
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border: 1px #666666;
+            border-collapse: collapse;
+        }
+        table.gridtable th {
+            padding: 8px;
+            border: 1px solid #666666;
+            background-color: #dedede;
+        }
+        table.gridtable td {
+            padding: 8px;
+            border: 1px solid #666666;
+            background-color: #ffffff;
+        }
+
+        .errorTip {
+            text-align: center;
+            font-size: 20px;
+            font-family: "Microsoft YaHei UI";
+            color: gray;
+            margin-top: 300px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="layui-container phone-detail-container">
+        <div class="layui-row phone-detail-item" id="phone-detail-item">
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/html" id="phoneDetailItem">
+    {{# if(d===null || d.length === 0) {  }}
+    <p class="errorTip"><i class="layui-icon">&#xe69c;</i>抱歉，该型号手机库存空了，我们会尽快进货的</p>
+    {{#  } else { }}
+        <p style="font-size: 20px;">在售手机:{{d.length}} 台</p>
+    {{#  } }}
+    {{# layui.each(d,function(index,item){ }}
+    {{# var imgUrl = null; if(item.img !== null){ imgUrl = '/image/'+item.img.substring(0,item.img.indexOf('.')) + '/' + item.img.substring(item.img.indexOf('.')+1); } }}
+    <div class="layui-col-md4 phone-detail-img-container">
+        <img onerror="this.src=defaultPic()" src="{{imgUrl}}" class="phone-detail-img"/>
+    </div>
+    <div class="layui-col-md8 phone-detail-desc">
+        <table class="gridtable" style="height:100%;width: 100%;font-size: 15px;font-family: 'Microsoft YaHei UI'">
+            <tr>
+                <th colspan="2" style="text-align: center">手机参数</th>
+            </tr>
+            <tr>
+                <td style="width: 33%">品牌</td>
+                <td>{{item.brandName}}</td>
+            </tr>
+            <tr>
+                <td style="width: 33%">型号</td>
+                <td>{{item.modelName}}</td>
+            </tr>
+            <tr>
+                <td style="width: 33%">颜色</td>
+                <td>{{item.colorName}}</td>
+            </tr>
+            <tr>
+                <td style="width: 33%">内存</td>
+                <td>{{item.memoryName}}</td>
+            </tr>
+            <tr>
+                <td style="width: 33%">新旧程度</td>
+                <td>{{item.degree}}</td>
+            </tr>
+            <tr>
+                <td style="width: 33%">是否在保</td>
+                <td>
+                    {{# if(item.projection === 1){ }}
+                        是
+                    {{# } else if(item.projection === 0){ }}
+                        否
+                    {{# } else { }}
+                        未知
+                    {{# } }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 33%">建议销售价</td>
+                <td>{{item.referenceSellingPrice}}</td>
+            </tr>
+        </table>
+    </div>
+    <hr/>
+    {{# });}}
+
+</script>
+
+
+<script type="text/javascript" src="/static/libs/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/static/libs/layui/layui.all.js"></script>
+<script type="text/javascript" src="/static/js/detail.js"></script>
+

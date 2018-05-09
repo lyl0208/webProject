@@ -206,7 +206,8 @@
         SELECT
           model_id AS modelId,
           model_name AS modelName,
-          brand_id AS brandId
+          brand_id AS brandId,
+          img AS img
         FROM
           phone_model
         WHERE

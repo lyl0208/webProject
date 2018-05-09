@@ -6,36 +6,137 @@
     <title>二手手机交易市场</title>
 
     <style>
-        .nav{
+        .nav {
             padding: 10px;
             font-family: "Microsoft YaHei UI";
         }
+
         .nav a {
             font-size: 20px;
         }
+
+        .header {
+            width: 100%;
+            height: 150px;
+            -webkit-box-shadow: 0px 10px 5px gray;
+            -moz-box-shadow: 0px 10px 5px gray;
+            box-shadow: 0px 10px 5px gray;
+        }
+
+        .container {
+            width: 95%;
+            margin-top: 20px;
+        }
+
+        .logo-container {
+            height: 100px;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+        }
+
+        .phone-list {
+            margin-left: 4%;
+        }
+
+        .phone-list li {
+            margin: 10px;
+            width: 18%;
+            height: 300px;
+            float: left;
+        }
+
+        .phone-container {
+            max-height: 800px;
+            overflow-y: auto;
+            border: 1px solid gray;
+            margin-top: 20px;
+            min-height: 600px;
+        }
+
+        .phone-item {
+            text-align: center;
+            font-size: 20px;
+            color: gray;
+            font-family: "Microsoft YaHei UI";
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .phone-item:hover {
+            box-shadow:5px 10px 5px #888888; ;
+        }
+
+        .errorTip {
+            text-align: center;
+            font-size: 20px;
+            font-family: "Microsoft YaHei UI";
+            color: gray;
+            margin-top: 300px;
+        }
+
+
+
     </style>
 
 </head>
 <body>
-
-<div class="layui-container" style="margin-top: 20px">
+<div class="layui-row header">
+    <div class="layui-col-md2 logo-container">
+        <img src="/static/images/no_pic.jpg" class="logo">
+    </div>
+</div>
+<div class="layui-container container">
     <div class="layui-row">
         <div class="layui-header">
-            <ul class="layui-nav nav layui-bg-blue">
-                <li class="layui-nav-item"><a href="javascript:;">苹果</a></li>
-                <li class="layui-nav-item layui-this"><a href="javascript:;">三星</a></li>
-                <li class="layui-nav-item"><a href="javascript:;">华为</a></li>
+            <ul class="layui-nav nav layui-bg-blue" id="brand-list" lay-filter="brandList">
             </ul>
         </div>
     </div>
 
-    <div class="layui-row" style="height: 600px;border: 1px solid gray">
-
+    <div class="layui-row phone-container">
+        <ul class="phone-list" id="phone-list">
+        </ul>
     </div>
 </div>
 
 </body>
 </html>
 
+
+
+<script type="text/html" id="brandList">
+    {{# layui.each(d,function(index,item){ }}
+
+        {{# if(index === 0){ }}
+            <li class="layui-nav-item layui-this"><a href="javascript:listPhoneItem('{{item.brandId}}')">{{item.brandName}}</a></li>
+        {{# } else { }}
+            <li class="layui-nav-item"><a href="javascript:listPhoneItem('{{item.brandId}}')">{{item.brandName}}</a></li>
+    {{# } }); }}
+</script>
+
+<script type="text/html" id="phoneList">
+    {{# if(d.length === 0) {  }}
+            <p class="errorTip"><i class="layui-icon">&#xe69c;</i>抱歉，该品牌下暂无手机</p>
+    {{#  } }}
+    {{# layui.each(d,function(index,item){ }}
+       {{# var imgUrl = null; if(item.img !== null){ imgUrl = '/image/'+item.img.substring(0,item.img.indexOf('.')) + '/' + item.img.substring(item.img.indexOf('.')+1)} }}
+        <li class="phone-item layui-container">
+            <div class="layui-row">
+                <img onerror="this.src=defaultPic()" src="{{imgUrl}}" style="height: 250px; width: 80%">
+            </div>
+            <div class="layui-row" style="margin-top:10px">
+                {{item.modelName}}
+            </div>
+        </li>
+    {{# }); }}
+</script>
+
+
 <script type="text/javascript" src="/static/libs/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/static/libs/layui/layui.all.js"></script>
+<script type="text/javascript" src="/static/js/index.js"></script>

@@ -82,10 +82,6 @@ public class SellServiceImpl implements SellService {
                 throw new BusinessException("imei:" + sellArgs.getImei() + " 该手机不是上架状态！");
             }
 
-            //设置手机状态已下架
-            phoneInfo.setState("4");
-            phoneMapper.editPhone(phoneInfo);
-
             //检查更新库存
             StockArgs args = new StockArgs();
             args.setBrandId(phoneInfo.getBrandId());
@@ -120,6 +116,11 @@ public class SellServiceImpl implements SellService {
             sellingDetail.setIMEI(sellArgs.getImei());
             sellingDetail.setTransactionPrice(sellArgs.getTransactionPrice());
             sellingDetailMapper.save(sellingDetail);
+
+            //设置手机状态已下架 和 销售明细编号
+            phoneInfo.setState("4");
+            phoneInfo.setSellingId(sellDetailSerialNumber);
+            phoneMapper.editPhone(phoneInfo);
 
             //保存销售记录
             SellLog sellLog = new SellLog();

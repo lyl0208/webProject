@@ -52,7 +52,7 @@ public class LoginController extends BaseController {
             return ResultMap.error("token生成错误");
         }
 
-        return ResultMap.ok("登陆成功").put("user",user).put("token",tokenStr);
+        return ResultMap.ok("登录成功").put("user",user).put("token",tokenStr);
     }
 
 

@@ -98,7 +98,7 @@ function showEditModel(data){
         type: 1,
         title: data==null?"添加手机档案":"修改手机档案",
         area: '450px',
-        offset: '120px',
+        offset: '0px',
         content: $("#addModel").html()
     });
     $("#editForm")[0].reset();

@@ -1,0 +1,39 @@
+<div class="content-header">
+    <h2 class="content-title">财务统计</h2>
+</div>
+
+<div>
+    <div class="layui-form toolbar">
+        品牌：
+        <input id="brandName" class="layui-input search-input" type="text" placeholder="请输入品牌"/>
+        型号：
+        <input id="modelName" class="layui-input search-input" type="text" placeholder="请输入型号"/>
+        颜色：
+        <input id="colorName" class="layui-input search-input" type="text" placeholder="请输入颜色"/>
+        内存：
+        <input id="memoryName" class="layui-input search-input" type="text" placeholder="请输入内存"/>
+        <button id="searchBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
+
+    <!--数据表格-->
+    <table class="layui-table" id="table" lay-filter="table"></table>
+
+</div>
+
+<script type="text/html" id="detailModel">
+    <div class="layui-form toolbar">
+        imei:
+        <input id="imei" class="layui-input search-input" type="text" placeholder="请输入imei"/>
+        <button id="detailSearchBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
+
+    <table class="layui-table" id="detailTable" lay-filter="detailTable"></table>
+
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="checkDetail">查看详情</a>
+</script>
+
+<script type="text/javascript" src="/static/js/admin/finance/finance.js"></script>

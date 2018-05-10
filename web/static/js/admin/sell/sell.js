@@ -78,17 +78,6 @@ function printTicket() {
     }
 
 
-    var wind = window.open("",'打印小票','height=300,width=700,top=100,left=100,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
-
-    $('#serialNumber').html(sellSlip.serialNumber);
-    $('#operatorName').html(getCurrentUser().realName);
-    $('#saleDate').html(sellSlip.saleDate);
-    $('#number').html(sellSlip.number);
-    $('#totalPrice').html(sellSlip.totalPrice);
-
-    wind.document.body.innerHTML =  document.getElementById('ticket').innerHTML;
-
-    wind.print();
-    wind.close();
+   window.open(encodeURI("sell/ticket.html?serialNumber="+sellSlip.serialNumber+"&operatorName="+getCurrentUser().realName+"&saleDate="+sellSlip.saleDate+"&number="+sellSlip.saleNumber+"&totalPrice="+sellSlip.totalPrice),'打印小票','height=300,width=700,top=100,left=100,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
 
 }

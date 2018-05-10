@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.finance.dao.FinanceMapper">
+    
+    <resultMap id="financeDtoMap" type="com.myweb.finance.model.FinanceDto">
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="model_name" property="modelName" jdbcType="VARCHAR"/>
+        <result column="color_name" property="colorName" jdbcType="VARCHAR"/>
+        <result column="memory_name" property="memoryName" jdbcType="VARCHAR"/>
+        <result column="recovery_price" property="recoveryPrice" jdbcType="DECIMAL"/>
+        <result column="amount_complained" property="amountComplained" jdbcType="DECIMAL"/>
+        <result column="transaction_price" property="transactionPrice" jdbcType="DECIMAL"/>
+        <result column="profit" property="profit" jdbcType="DECIMAL"/>
+        <result column="sale_number" property="saleNumber" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <resultMap id="financeDetailDtoMap" type="com.myweb.finance.model.FinanceDetailDto">
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="recovery_price" property="recoveryPrice" jdbcType="DECIMAL"/>
+        <result column="amount_complained" property="amountComplained" jdbcType="DECIMAL"/>
+        <result column="transaction_price" property="transactionPrice" jdbcType="DECIMAL"/>
+        <result column="profit" property="profit" jdbcType="DECIMAL"/>
+    </resultMap>
+    
+    
+    <select id="listFinanceDto" resultMap="financeDtoMap" parameterType="com.myweb.finance.model.FinanceArgs">
+        SELECT
+          sl.brand_name,
+          sl.model_name,
+          sl.color_name,
+          sl.memory_name,
+          count(1) AS sale_number,
+          sum(p.recovery_price) AS recovery_price,
+          sum(ifnull(r.amount_complained,0)) AS amount_complained,
+          sum(sl.transaction_price) as transaction_price,
+          sum(sl.transaction_price - (p.recovery_price + ifnull(r.amount_complained,0))) AS profit
+        FROM
+          sell_log as sl
+        LEFT JOIN phone_info as p on p.imei = sl.imei
+        LEFT JOIN `repair` as r on r.imei = sl.imei
+        WHERE
+          1=1
+          <trim suffixOverrides="and">
+              <if test="brandName!=null and brandName !=''">and sl.brand_name like '%${brandName}%'</if>
+              <if test="modelName != null and modelName != ''">and sl.model_name like '%${modelName}%'</if>
+              <if test="colorName != null and colorName != ''">and sl.color_name like '%${colorName}%'</if>
+              <if test="memoryName != null and memoryName != ''">and sl.memory_name like '%${memoryName}%'</if>
+          </trim>
+        GROUP BY
+          sl.brand_name,
+          sl.model_name,
+          sl.color_name,
+          sl.memory_name
+        ORDER BY profit,sale_number DESC
+    </select>
+
+    <select id="listFinanceDetailDto" resultMap="financeDetailDtoMap" parameterType="com.myweb.finance.model.FinanceArgs">
+        SELECT
+          sl.imei,
+          p.recovery_price,
+          ifnull(r.amount_complained,0) as amount_complained,
+          sl.transaction_price,
+          sl.transaction_price - (p.recovery_price + ifnull(r.amount_complained,0)) as profit
+        FROM
+          sell_log as sl
+        LEFT JOIN phone_info as p on p.imei = sl.imei
+        LEFT JOIN `repair` as r on r.imei = sl.imei
+        WHERE
+          sl.brand_name = #{brandName}
+        AND sl.model_name = #{modelName}
+        AND sl.color_name = #{colorName}
+        AND sl.memory_name = #{memoryName}
+        <if test="imei != null and imei != ''">and sl.imei = #{imei}</if>
+        ORDER BY profit DESC
+    </select>
+    
+</mapper>

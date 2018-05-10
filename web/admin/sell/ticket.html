@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>销售单打印</title>
+</head>
+<body>
+<table border="1" cellspacing="0"  style="width: 100%">
+    <tr>
+        <td style="width: 33%">
+            销售单号
+        </td>
+        <td id="serialNumber">
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 33%">
+            经办人
+        </td>
+        <td id="operatorName">
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 33%">
+            销售日期
+        </td>
+        <td id="saleDate">
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 33%">
+            数量
+        </td>
+        <td id="number">
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 33%;">
+        </td>
+        <td id="totalPrice">
+        </td>
+    </tr>
+</table>
+
+<br/><br/>
+<input style="float: right;" id="printBtn" type="button" onclick="doPrint()" value="打印">
+
+
+</body>
+</html>
+<script type="text/javascript" src="/static/libs/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+       var serialNumber = getArgsFromHref(window.location.href,'serialNumber');
+       var operatorName = getArgsFromHref(window.location.href,'operatorName');
+       var saleDate = getArgsFromHref(window.location.href,'saleDate');
+       var number = getArgsFromHref(window.location.href,'number');
+       var totalPrice = getArgsFromHref(window.location.href,'totalPrice');
+
+       $('#serialNumber').html(serialNumber);
+       $('#operatorName').html(decodeURI(operatorName));
+       $('#saleDate').html(timestampToTime(saleDate));
+       $('#number').html(number);
+       $('#totalPrice').html(totalPrice);
+
+    });
+
+    function getArgsFromHref(sHref,sArgName) {
+
+        var args = sHref.split('?');
+        var retval = '';
+
+        if (args[0] === sHref)
+        {
+            //参数为空
+            return retval;
+        }
+
+        var str = args[1];
+        args = str.split("&");
+        for (var i = 0; i < args.length; i ++) {
+            str = args[i];
+            var arg = str.split("=");
+            if (arg.length <= 1) {
+                continue;
+            }
+            if (arg[0] === sArgName) {
+                retval = arg[1];
+            }
+        }
+        return retval;
+
+    }
+
+    function timestampToTime(timestamp) {
+        var date = new Date(parseInt(timestamp));
+        var Y = date.getFullYear() + '-';
+        var M = date.getMonth() + 1
+        M = M < 10?'0'+M+'-':M+'-';
+        var D = date.getDate() + ' ';
+        var h = date.getHours() + ':';
+        var m = date.getMinutes() + ':';
+        var s = date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
+
+    function doPrint() {
+        $('#printBtn').hide();
+        window.print();
+    }
+
+</script>
+

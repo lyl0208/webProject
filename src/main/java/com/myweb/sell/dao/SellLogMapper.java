@@ -11,4 +11,10 @@ public interface SellLogMapper {
 
     List<SellLog> listSellLog(SellHistoryArgs args);
 
+    /**
+     * 通过销售单号查询销售明细
+     * @return
+     */
+    List<SellLog> listSellLogBySerialNumber(String serialNumber);
+
 }

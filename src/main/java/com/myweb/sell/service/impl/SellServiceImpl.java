@@ -139,6 +139,11 @@ public class SellServiceImpl implements SellService {
         return ResultMap.ok("处理成功").put("sellSlip",sellSlip);
     }
 
+    @Override
+    public List<SellLog> getSellLog(String serialNumber){
+        return sellLogMapper.listSellLogBySerialNumber(serialNumber);
+    }
+
     /**
      * 生成唯一随机的销售单号
      */

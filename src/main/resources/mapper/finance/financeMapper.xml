@@ -47,6 +47,8 @@
               <if test="modelName != null and modelName != ''">and sl.model_name like '%${modelName}%'</if>
               <if test="colorName != null and colorName != ''">and sl.color_name like '%${colorName}%'</if>
               <if test="memoryName != null and memoryName != ''">and sl.memory_name like '%${memoryName}%'</if>
+              <if test="sellDateStart != null and sellDateStart != ''">and sl.sale_date &gt;= '${sellDateStart} 00:00:00' </if>
+              <if test="sellDateEnd != null and sellDateEnd != ''">and sl.sale_date &lt;= '${sellDateEnd} 24:00:00'</if>
           </trim>
         GROUP BY
           sl.brand_name,

@@ -5,41 +5,65 @@
     <title>销售单打印</title>
 </head>
 <body>
-<table border="1" cellspacing="0"  style="width: 100%">
+<table border="1" cellspacing="0"  style="width: 100%" id="ticketTable">
     <tr>
         <td style="width: 33%">
             销售单号
         </td>
-        <td id="serialNumber">
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 33%">
-            经办人
-        </td>
-        <td id="operatorName">
+        <td id="serialNumber"colspan="5">
         </td>
     </tr>
     <tr>
         <td style="width: 33%">
             销售日期
         </td>
-        <td id="saleDate">
+        <td id="saleDate" colspan="5">
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 33%">
+            经办人
+        </td>
+        <td id="operatorName" colspan="5">
         </td>
     </tr>
     <tr>
         <td style="width: 33%">
             数量
         </td>
-        <td id="number">
+        <td id="number" colspan="5">
+        </td>
+    </tr>
+    <tr id="sellLogBefore">
+        <td>手机IMEI</td>
+        <td>品牌</td>
+        <td>型号</td>
+        <td>颜色</td>
+        <td>内存</td>
+        <td>价格</td>
+    </tr>
+    <tr>
+        <td rowspan="4">结算方式</td>
+        <td colspan="3" rowspan="4">
+            <select id="calcType" onchange="changeCalcType()">
+                <option value="xianjin">现金</option>
+                <option>支付宝</option>
+                <option>微信</option>
+                <option>银行卡</option>
+            </select>
         </td>
     </tr>
     <tr>
-        <td style="width: 33%;">
-            总金额
-        </td>
-        <td id="totalPrice">
-        </td>
+        <td>合计</td>
+        <td id="totalPrice" style="width: 15%"></td>
+    </tr>
+    <tr>
+        <td>实收</td>
+        <td style="width: 15%"><input type="text" placeholder="请输入实收金额"></td>
+    </tr>
+    <tr>
+        <td>找零</td>
+        <td style="width: 15%"><input type="text" id="zhaoling" placeholder="请输入找零金额(仅限现金)"></td>
     </tr>
 </table>
 
@@ -65,7 +89,40 @@
        $('#number').html(number);
        $('#totalPrice').html(totalPrice);
 
+       $.post({
+           url:"/api/sell/getSellLog",
+           data:{token:getToken(),serialNumber:serialNumber},
+           success:function (data) {
+               for (var i = 0;i < data.length; i++) {
+                   var sellLog = data[i];
+                   $('#sellLogBefore').after("<tr>" +
+                       "        <td>"+sellLog.imei+"</td>" +
+                       "        <td>"+sellLog.brandName+"</td>" +
+                       "        <td>"+sellLog.modelName+"</td>" +
+                       "        <td>"+sellLog.colorName+"</td>" +
+                       "        <td>"+sellLog.memoryName+"</td>" +
+                       "        <td>"+sellLog.transactionPrice+"</td>" +
+                       "    </tr>")
+               }
+
+           }
+       })
+
     });
+    
+    function changeCalcType() {
+        if ($('#calcType').val() === 'xianjin') {
+            document.getElementById("zhaoling").readOnly = false;
+        } else {
+            document.getElementById("zhaoling").readOnly = true;
+        }
+    }
+
+    //获取当前token
+    function getToken() {
+        return localStorage.getItem("token");
+    }
+
 
     function getArgsFromHref(sHref,sArgName) {
 

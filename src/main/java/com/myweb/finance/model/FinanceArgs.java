@@ -17,6 +17,11 @@ public class FinanceArgs extends BaseArgs{
 
     private String imei;
 
+    private String sellDateStart;
+
+    private String sellDateEnd;
+
+
     public String getBrandName() {
         return brandName;
     }
@@ -55,5 +60,21 @@ public class FinanceArgs extends BaseArgs{
 
     public void setImei(String imei) {
         this.imei = imei;
+    }
+
+    public String getSellDateStart() {
+        return sellDateStart;
+    }
+
+    public void setSellDateStart(String sellDateStart) {
+        this.sellDateStart = sellDateStart;
+    }
+
+    public String getSellDateEnd() {
+        return sellDateEnd;
+    }
+
+    public void setSellDateEnd(String sellDateEnd) {
+        this.sellDateEnd = sellDateEnd;
     }
 }

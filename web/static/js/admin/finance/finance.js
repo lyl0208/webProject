@@ -40,10 +40,23 @@ $(function () {
         }
     });
 
+    layui.use('laydate',function(){
+       var laydate = layui.laydate;
+
+       laydate.render({
+          elem:'#sellDateStart'
+       });
+
+       laydate.render({
+           elem:'#sellDateEnd'
+       })
+
+    });
+
 });
 
 function doSearch(table) {
-    layui.table.reload('table', {where: {brandName: $('#brandName').val().trim(),modelName: $('#modelName').val().trim(),memoryName: $('#memoryName').val().trim(),colorName: $('#colorName').val().trim()}});
+    layui.table.reload('table', {where: {brandName: $('#brandName').val().trim(),modelName: $('#modelName').val().trim(),memoryName: $('#memoryName').val().trim(),colorName: $('#colorName').val().trim(),sellDateStart:$('#sellDateStart').val().trim(),sellDateEnd:$('#sellDateEnd').val().trim()}});
 }
 
 function showFinanceDetailModel(data) {

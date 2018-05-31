@@ -56,4 +56,14 @@
           #{transactionPrice,jdbcType=VARCHAR}
         )
     </insert>
+
+    <select id="listSellLogBySerialNumber" resultMap="sellLogMap">
+        select
+          sl.*
+        from
+          sell_log as sl
+        left join selling_detail as sd on sl.selling_id = sd.selling_id
+        where
+          sd.serial_number = #{serialNumber}
+    </select>
 </mapper>

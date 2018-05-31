@@ -77,5 +77,24 @@
         <if test="imei != null and imei != ''">and sl.imei = #{imei}</if>
         ORDER BY profit DESC
     </select>
+
+    <select id="getTotalProfit" resultType="java.math.BigDecimal" parameterType="com.myweb.finance.model.FinanceArgs">
+        SELECT
+        sum(sl.transaction_price - (p.recovery_price + ifnull(r.amount_complained,0))) AS totalProfit
+        FROM
+        sell_log as sl
+        LEFT JOIN phone_info as p on p.imei = sl.imei
+        LEFT JOIN `repair` as r on r.imei = sl.imei
+        WHERE
+        1=1
+        <trim suffixOverrides="and">
+            <if test="brandName!=null and brandName !=''">and sl.brand_name like '%${brandName}%'</if>
+            <if test="modelName != null and modelName != ''">and sl.model_name like '%${modelName}%'</if>
+            <if test="colorName != null and colorName != ''">and sl.color_name like '%${colorName}%'</if>
+            <if test="memoryName != null and memoryName != ''">and sl.memory_name like '%${memoryName}%'</if>
+            <if test="sellDateStart != null and sellDateStart != ''">and sl.sale_date &gt;= '${sellDateStart} 00:00:00' </if>
+            <if test="sellDateEnd != null and sellDateEnd != ''">and sl.sale_date &lt;= '${sellDateEnd} 24:00:00'</if>
+        </trim>
+    </select>
     
 </mapper>

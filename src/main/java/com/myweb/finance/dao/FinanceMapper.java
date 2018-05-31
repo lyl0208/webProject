@@ -4,6 +4,7 @@ import com.myweb.finance.model.FinanceArgs;
 import com.myweb.finance.model.FinanceDetailDto;
 import com.myweb.finance.model.FinanceDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -15,5 +16,7 @@ public interface FinanceMapper {
 
 
     List<FinanceDetailDto> listFinanceDetailDto(FinanceArgs args);
+
+    BigDecimal getTotalProfit(FinanceArgs args);
 
 }

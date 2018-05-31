@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 /**
  * 财务统计controller
  */
@@ -21,6 +23,11 @@ public class FinanceController {
     @PostMapping("/list")
     public PageResult list(FinanceArgs args) {
         return financeService.listFinanceDto(args);
+    }
+
+    @PostMapping("/getTotalProfit")
+    public BigDecimal getTotalProfit(FinanceArgs args){
+        return financeService.getTotalProfit(args);
     }
 
     @PostMapping("/listDetail")

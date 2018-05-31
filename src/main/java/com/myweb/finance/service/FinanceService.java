@@ -5,6 +5,8 @@ import com.myweb.finance.model.FinanceArgs;
 import com.myweb.finance.model.FinanceDetailDto;
 import com.myweb.finance.model.FinanceDto;
 
+import java.math.BigDecimal;
+
 
 /**
  * 财务相关service
@@ -24,5 +26,7 @@ public interface FinanceService {
      * @return
      */
     PageResult<FinanceDetailDto> listFinanceDetailDto(FinanceArgs args);
+
+    BigDecimal getTotalProfit(FinanceArgs args);
 
 }

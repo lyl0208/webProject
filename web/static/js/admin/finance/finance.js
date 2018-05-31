@@ -6,7 +6,7 @@ $(function () {
         url : '/api/finance/list',
         method: 'post',
         where: {
-            token : getToken()
+            token:getToken()
         },
         page: true,
         cols: [[
@@ -21,7 +21,19 @@ $(function () {
             {field:'transactionPrice',sort:true,title:'总售价'},
             {field:'profit',sort:true,title:'总利润'},
             {align:'center', toolbar: '#barTpl', minWidth: 100, title: '操作'}
-        ]]
+        ]],
+        done:function () {
+            $.post({
+                url:'/api/finance/getTotalProfit',
+                data:{token:getToken(),brandName: $('#brandName').val().trim(),modelName: $('#modelName').val().trim(),memoryName: $('#memoryName').val().trim(),colorName: $('#colorName').val().trim(),sellDateStart:$('#sellDateStart').val().trim(),sellDateEnd:$('#sellDateEnd').val().trim()},
+                success:function (data) {
+                    $('#totalProfit').html(data);
+                },
+                error:function () {
+                    $('#totalProfit').html('加载失败，请重试');
+                }
+            })
+        }
     });
 
     //搜索按钮点击事件

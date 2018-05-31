@@ -11,6 +11,7 @@ import com.myweb.finance.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -40,5 +41,10 @@ public class FinanceServiceImpl implements FinanceService{
         pageResult.setData(financeDetailDtos);
         pageResult.setCount(page.getTotal());
         return pageResult;
+    }
+
+    @Override
+    public BigDecimal getTotalProfit(FinanceArgs args) {
+        return financeMapper.getTotalProfit(args);
     }
 }
